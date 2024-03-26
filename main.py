@@ -1,0 +1,383 @@
+import urllib.parse
+import os
+from tabulate import tabulate
+#agregar
+import Agregar.addActivos as addAc
+import Agregar.addPersonal as addPer
+import Agregar.addZonas as addZon
+#buscar
+import Buscar.getActivos as getAc
+import Buscar.getPersonal as getPer
+import Buscar.getZonas as getZon
+#editar
+import Editar.updateActivos as upAc
+import Editar.updatePersonal as upPer
+import Editar.updateZonas as upZon
+#eliminar
+import Eliminar.deleteActivos as delAc
+import Eliminar.deletePersonal as delPer
+import Eliminar.deleteZonas as delZon 
+#reportes
+import Reportes.getReportes as getRep
+
+
+def menuZonas():
+    while True:
+        os.system("clear")
+        print('''
+
+ 
+  __  __  ______  _   _  _    _         ______ ____   _   _             _____ 
+ |  \/  ||  ____|| \ | || |  | |       |___  // __ \ | \ | |    /\     / ____|
+ | \  / || |__   |  \| || |  | |          / /| |  | ||  \| |   /  \   | (___  
+ | |\/| ||  __|  | . ` || |  | |         / / | |  | || . ` |  / /\ \   \___ \ 
+ | |  | || |____ | |\  || |__| |        / /__| |__| || |\  | / ____ \  ____) |
+ |_|  |_||______||_| \_| \____/        /_____|\____/ |_| \_|/_/    \_\|_____/ 
+                                                                              
+                                                                                                                                                      
+              1. AGREGAR
+              2. EDITAR
+              3. ELIMINAR
+              4. BUSCAR
+              5. REGRESAR AL MENU PRINCIPAL
+              ''')
+        try:
+            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            if OPCIONES == 1:
+                print()
+            elif OPCIONES == 2:
+                print()
+            elif OPCIONES == 3:
+                print()
+            elif OPCIONES == 4:
+                print()
+            elif OPCIONES == 5:
+                break
+        except ValueError as error:
+            print(error)
+            input("Oprima enter para volver a cargar el programa")
+        except KeyboardInterrupt as error:
+              print(error)
+              input("Oprima alguna tecla para continuar con el programa")
+
+def menuPersonal():
+    while True:
+        os.system("clear")
+        print('''
+
+  __  __  ______  _   _  _    _         _____   ______  _____    _____   ____   _   _            _      
+ |  \/  ||  ____|| \ | || |  | |       |  __ \ |  ____||  __ \  / ____| / __ \ | \ | |    /\    | |     
+ | \  / || |__   |  \| || |  | |       | |__) || |__   | |__) || (___  | |  | ||  \| |   /  \   | |     
+ | |\/| ||  __|  | . ` || |  | |       |  ___/ |  __|  |  _  /  \___ \ | |  | || . ` |  / /\ \  | |     
+ | |  | || |____ | |\  || |__| |       | |     | |____ | | \ \  ____) || |__| || |\  | / ____ \ | |____ 
+ |_|  |_||______||_| \_| \____/        |_|     |______||_|  \_\|_____/  \____/ |_| \_|/_/    \_\|______|
+                                                                                                        
+              1. AGREGAR
+              2. EDITAR
+              3. ELIMINAR
+              4. BUSCAR
+              5. REGRESAR AL MENU PRINCIPAL
+              ''')
+        try:
+            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            if OPCIONES == 1:
+                print()
+            elif OPCIONES == 2:
+                print()
+            elif OPCIONES == 3:
+                print()
+            elif OPCIONES == 4:
+                print()
+            elif OPCIONES == 5:
+                break
+        except ValueError as error:
+            print(error)
+            input("Oprima enter para volver a cargar el programa")
+        except KeyboardInterrupt as error:
+              print(error)
+              input("Oprima alguna tecla para continuar con el programa")
+
+def menuActivos():
+    while True:
+        os.system("clear")
+        print('''
+
+
+  __  __  ______  _   _  _    _                   _____  _______  _____ __      __ ____    _____ 
+ |  \/  ||  ____|| \ | || |  | |           /\    / ____||__   __||_   _|\ \    / // __ \  / ____|
+ | \  / || |__   |  \| || |  | |          /  \  | |        | |     | |   \ \  / /| |  | || (___  
+ | |\/| ||  __|  | . ` || |  | |         / /\ \ | |        | |     | |    \ \/ / | |  | | \___ \ 
+ | |  | || |____ | |\  || |__| |        / ____ \| |____    | |    _| |_    \  /  | |__| | ____) |
+ |_|  |_||______||_| \_| \____/        /_/    \_\\_____|   |_|   |_____|    \/    \____/ |_____/ 
+                                                                                                 
+                                                                                                 
+              1. AGREGAR
+              2. EDITAR
+              3. ELIMINAR
+              4. BUSCAR
+              5. REGRESAR AL MENU PRINCIPAL
+
+''')
+        try:
+            OPCIONES= int(input("Ingrese el número de la seleccion deseada: "))
+            if OPCIONES == 1:
+                print()
+            elif OPCIONES == 2:
+                idActivo = input("Ingrese el id del activo : ")
+                print(tabulate( upAc.updateActivos(idActivo), headers="keys", tablefmt="github"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+               
+            elif OPCIONES == 3:
+                print()
+            elif OPCIONES == 4:
+                print()
+            elif OPCIONES == 5:
+                break
+        except ValueError as error:
+            print(error)
+            input("Oprima enter para volver a cargar el programa")
+        except KeyboardInterrupt as error:
+              print(error)
+              input("Oprima alguna tecla para continuar con el programa")
+
+
+def menuAsignaciones():
+    while True:
+        os.system("clear")
+        print('''
+
+  __  __  ______  _   _  _    _                    _____  _____  _____  _   _            _____  _____  ____   _   _  ______   _____  
+ |  \/  ||  ____|| \ | || |  | |           /\     / ____||_   _|/ ____|| \ | |    /\    / ____||_   _|/ __ \ | \ | ||  ____| / ____| 
+ | \  / || |__   |  \| || |  | |          /  \   | (___    | | | |  __ |  \| |   /  \  | |       | | | |  | ||  \| || |__   | (___   
+ | |\/| ||  __|  | . ` || |  | |         / /\ \   \___ \   | | | | |_ || . ` |  / /\ \ | |       | | | |  | || . ` ||  __|   \___ \  
+ | |  | || |____ | |\  || |__| |        / ____ \  ____) | _| |_| |__| || |\  | / ____ \| |____  _| |_| |__| || |\  || |____  ____) | 
+ |_|  |_||______||_| \_| \____/        /_/    \_\|_____/ |_____|\_____||_| \_|/_/    \_\\_____||_____|\____/ |_| \_||______||_____/  
+                       _____   ______                        _____  _______  _____ __      __ ____    _____                       
+                      |  __ \ |  ____|                /\    / ____||__   __||_   _|\ \    / // __ \  / ____|                      
+                      | |  | || |__                  /  \  | |        | |     | |   \ \  / /| |  | || (___                        
+                      | |  | ||  __|                / /\ \ | |        | |     | |    \ \/ / | |  | | \___ \                       
+                      | |__| || |____              / ____ \| |____    | |    _| |_    \  /  | |__| | ____) |                      
+                      |_____/ |______|            /_/    \_\\_____|   |_|   |_____|    \/    \____/ |_____/                       
+                                                                                                                                     
+                                                                                                                                     
+  
+                                                                                                 
+              1. CREAR ASIGNACION
+              2. BUSCAR ASIGNACION
+              3. REGRESAR AL MENU PRINCIPAL
+''')
+        try:
+            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            if OPCIONES == 1:
+                print()
+            elif OPCIONES == 2:
+                print()
+            elif OPCIONES == 3:
+                break
+        except ValueError as error:
+            print(error)
+            input("Oprima enter para volver a cargar el programa")
+        except KeyboardInterrupt as error:
+              print(error)
+              input("Oprima alguna tecla para continuar con el programa")
+def menuReportes():
+    while True:
+        os.system("clear")
+        print('''
+
+
+  __  __  ______  _   _  _    _         _____   ______  _____    ____   _____  _______  ______   _____ 
+ |  \/  ||  ____|| \ | || |  | |       |  __ \ |  ____||  __ \  / __ \ |  __ \|__   __||  ____| / ____|
+ | \  / || |__   |  \| || |  | |       | |__) || |__   | |__) || |  | || |__) |  | |   | |__   | (___  
+ | |\/| ||  __|  | . ` || |  | |       |  _  / |  __|  |  ___/ | |  | ||  _  /   | |   |  __|   \___ \ 
+ | |  | || |____ | |\  || |__| |       | | \ \ | |____ | |     | |__| || | \ \   | |   | |____  ____) |
+ |_|  |_||______||_| \_| \____/        |_|  \_\|______||_|      \____/ |_|  \_\  |_|   |______||_____/ 
+                                                                                                       
+                                                                                                                                                     
+                                                                                                                                     
+  
+                                                                                                 
+              1. LISTAR TODOS LOS ACTIVOS
+              2. LISTAR ACTIVOS POR CATEGORIA
+              3. LISTAR ACTIVOS DADOS DE BAJA POR DAÑO
+              4. LISTAR ACTIVOS Y ASIGNACION
+              5. LISTAR HISTORIAL DE MOV. DE ACTIVO
+              6. REGRESAR AL MENU PRINCIPAL
+
+''')
+        try:
+            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            if OPCIONES == 1:
+                print(tabulate(getRep.getAllActivos(), headers="keys", tablefmt="rounded_grid"))
+                print(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
+                input('''
+                                       OPRIMA ALGUNA TECLA PARA CONTINUAR...        ''')
+            elif OPCIONES == 2:
+                getRep.getAllCategoria()
+            elif OPCIONES == 3:
+                print()
+            elif OPCIONES == 4:
+                print()
+            elif OPCIONES == 5:
+                print()
+            elif OPCIONES == 6:
+                break
+        except ValueError as error:
+            print(error)
+            input("Oprima enter para volver a cargar el programa")
+        except KeyboardInterrupt as error:
+              print(error)
+              input("Oprima alguna tecla para continuar con el programa")
+
+def menuMovimientoDeActivos():
+    while True:
+        os.system("clear")
+        print('''
+
+
+  __  __  ______  _   _  _    _         __  __   ____ __      __ _____  __  __  _____  ______  _   _  _______  ____  
+ |  \/  ||  ____|| \ | || |  | |       |  \/  | / __ \\ \    / /|_   _||  \/  ||_   _||  ____|| \ | ||__   __|/ __ \ 
+ | \  / || |__   |  \| || |  | |       | \  / || |  | |\ \  / /   | |  | \  / |  | |  | |__   |  \| |   | |  | |  | |
+ | |\/| ||  __|  | . ` || |  | |       | |\/| || |  | | \ \/ /    | |  | |\/| |  | |  |  __|  | . ` |   | |  | |  | |
+ | |  | || |____ | |\  || |__| |       | |  | || |__| |  \  /    _| |_ | |  | | _| |_ | |____ | |\  |   | |  | |__| |
+ |_|  |_||______||_| \_| \____/        |_|  |_| \____/    \/    |_____||_|  |_||_____||______||_| \_|   |_|   \____/ 
+                _____   ______                   _____  _______  _____ __      __ ____    _____                      
+               |  __ \ |  ____|           /\    / ____||__   __||_   _|\ \    / // __ \  / ____|                     
+               | |  | || |__             /  \  | |        | |     | |   \ \  / /| |  | || (___                       
+               | |  | ||  __|           / /\ \ | |        | |     | |    \ \/ / | |  | | \___ \                      
+               | |__| || |____         / ____ \| |____    | |    _| |_    \  /  | |__| | ____) |                     
+               |_____/ |______|       /_/    \_\\_____|   |_|   |_____|    \/    \____/ |_____/                      
+                                                                                                                     
+                                                                                                                     
+                                                                
+  
+                                                                                                 
+              1. RETORNO DE ACTIVO
+              2. DAR DE BAJA ACTIVO
+              3. CAMBIAR ASIGNACION DE ACTIVO
+              4. ENVIAR A GARANTIA ACTIVO
+              5. REGRESAR AL MENU PRINCIPAL
+
+''')
+        try:
+            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            if OPCIONES == 1:
+                print()
+            elif OPCIONES == 2:
+                print()
+            elif OPCIONES == 3:
+                print()
+            elif OPCIONES == 4:
+                print()
+            elif OPCIONES == 5:
+                
+                break
+        except ValueError as error:
+            print(error)
+            input("Oprima enter para volver a cargar el programa")
+        except KeyboardInterrupt as error:
+              print(error)
+              input("Oprima alguna tecla para continuar con el programa")
+        
+if (__name__ == "__main__"):
+    while True:
+        os.system("clear")
+        print('''
+              
+              
+                                                                                                                
+                                                                                                                                                                                            
+                                              @@@@@@@@@@@@@@@@@@@@@@@
+                                            @@@@@/,,,,,,,,,,,,,,,@@@@@
+                                        @@@@@,,,,,,,,,,,,,,*******//////((@@@@@
+                                   @@@@@,,,,,,,,,,,*********/////(((((######%@@@@
+                               @@@@@,,,,,,,&@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%&&&&@@@@@
+                            @@@@@,,,,,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%%&@@@@@
+                           @@@@@***@@@@@@@@@@@@@@@@ ,,,,,,,,*****/#@@@@@@@@@@@@@@@%%%@@@@@
+                         @@@@@**@@@@@@@@@@@@&,,,,,/@@@@@@@@@@@@@@@@###%%&@@@@@@@@@@@@%@@@@@
+                        @@@@@/@@@@@@@@@@@,.,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@@@@@@@@&%@@@@@
+                       @@@@@(@@@@@@@@@,,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@@@@@@@@@#@@@@@
+                      @@@@@#@@@@@@@@**@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@@@@@@@@#@@@@@
+                 @@@@@##@@%@@@@@@@@//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##@@@@@@@@#@@##@@@@@
+                @@@@@%%@@&&@@@@@@@##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##@@@@@@@##@@##@@@@@
+               @@@@@&&@@@%@@@@@@@%&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#%@@@@@@@#@@@#@@@@@
+                @@@@@%@@@%@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##@@@@@@@#@@@#@@@@@
+                 @@@@@%@&%@@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##@@@@@@@#@@#@@@@@
+                    @@@@@%@@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#(@@@@@@@#@@@@@
+                    @@@@@%&@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@(&@@@@@@(#@@@@@
+                    @@@@@%%@@@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@(@@@@@@@#(@@@@@
+                     @@@@@##@@@@@@%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@((@@@@@
+                      @@@@@#%@@@@@@@@@@*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#@@@@@@@@@@((@@@@@
+                      @@@@@&##@@@@@@@@@@@@@@@&%%%%%###%%&&%%%#(###(((((#@@@@@@@@@@@@@@@((@@@@@
+                        @@@@@##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@((@@@@@
+                         @@@@@##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#((@@@@@
+                           @@@@@#############(#@@@@@@@@@@@@@@@@@@@@@@@@@%(((((((((((((@@@@@
+                            @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                                      
+   _____  _____   _____  _______  ______  __  __                   _____           _____       _____   ______  
+  / ____||_   _| / ____||__   __||  ____||  \/  |    /\           / ____|  ___    / ____|     |  __ \ |  ____| 
+ | (___    | |  | (___     | |   | |__   | \  / |   /  \         | |  __  ( _ )  | |          | |  | || |__    
+  \___ \   | |   \___ \    | |   |  __|  | |\/| |  / /\ \        | | |_ | / _ \/\| |          | |  | ||  __|   
+  ____) | _| |_  ____) |   | |   | |____ | |  | | / ____ \       | |__| || (_>  <| |____      | |__| || |____  
+ |_____/ |_____||_____/    |_|   |______||_|  |_|/_/    \_\       \_____| \___/\/ \_____|     |_____/ |______| 
+            _____  _   _ __      __ ______  _   _  _______         _____   _____  ____                         
+           |_   _|| \ | |\ \    / /|  ____|| \ | ||__   __| /\    |  __ \ |_   _|/ __ \                        
+             | |  |  \| | \ \  / / | |__   |  \| |   | |   /  \   | |__) |  | | | |  | |                       
+             | |  | . ` |  \ \/ /  |  __|  | . ` |   | |  / /\ \  |  _  /   | | | |  | |                       
+            _| |_ | |\  |   \  /   | |____ | |\  |   | | / ____ \ | | \ \  _| |_| |__| |                       
+           |_____||_| \_|    \/    |______||_| \_|   |_|/_/    \_\|_|  \_\|_____|\____/                        
+                 _____            __  __  _____   _    _   _____  _                 _   _  _____    _____                
+                / ____|    /\    |  \/  ||  __ \ | |  | | / ____|| |         /\    | \ | ||  __ \  / ____|               
+               | |        /  \   | \  / || |__) || |  | || (___  | |        /  \   |  \| || |  | || (___                 
+               | |       / /\ \  | |\/| ||  ___/ | |  | | \___ \ | |       / /\ \  | . ` || |  | | \___ \                
+               | |____  / ____ \ | |  | || |     | |__| | ____) || |____  / ____ \ | |\  || |__| | ____) |               
+                \_____|/_/    \_\|_|  |_||_|      \____/ |_____/ |______|/_/    \_\|_| \_||_____/ |_____/                
+                                                                                                               
+                                                                                                    
+                                        
+               MENU PRINCIPAL
+                                                                                                                 
+    OPCIONES
+                                                                                                                    
+        1. ACTIVOS
+        2. PERSONAL 
+        3. ZONAS
+        4. ASIGNACION DE ACTIVOS
+        5. REPOTES 
+        6. MOVIMIENTO DE ACTIVOS
+        7. SALIR  
+    ''')
+        try:
+            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            if OPCIONES == 1:
+                menuActivos()
+                
+            elif OPCIONES == 2:
+                menuPersonal()
+
+            elif OPCIONES == 3:
+                menuZonas()
+
+            elif OPCIONES == 4:
+                menuAsignaciones()
+                
+            elif OPCIONES == 5:
+                menuReportes()
+
+            elif OPCIONES == 6:
+                menuMovimientoDeActivos()
+
+
+                input('''
+                      
+                      Oprima enter para volver a cargar el programa''')
+                
+            elif OPCIONES == 7:
+                break
+        except ValueError as error:
+            print(error)
+            input("Oprima enter para volver a cargar el programa")
+        except KeyboardInterrupt as error:
+              print(error)
+              input("Oprima alguna tecla para continuar con el programa")
+
