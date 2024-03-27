@@ -16,7 +16,6 @@ Id del activo no encontrado. """)
     
     while True:
         try:
-            print(tabulate(data, headers="keys", tablefmt="rounded_grid"))
             print(f"""
 Datos para modificar: """)
             for i, (val, sev) in enumerate(data[0].items()):
@@ -28,7 +27,7 @@ Seleccione una opción: """))
             nuevoValor = input(f"""
 Ingrese el nuevo valor para {datoModificar}: """)
             if datoModificar in data[0]:
-                if datoModificar == "cantidadEnStock" or "precio_venta" or "precio_proveedor":
+                if datoModificar == "NroItem" or "CodTransaccion" or "NroFormulario":
                     data[0][datoModificar] = int(nuevoValor)
                     break
                 else:

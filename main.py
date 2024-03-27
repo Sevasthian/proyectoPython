@@ -44,13 +44,34 @@ def menuZonas():
         try:
             OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
             if OPCIONES == 1:
-                print()
+                nombre = input("Ingrese el nombre de la zona: ")
+                capacidad = input("Ingrese la capacidad de la zona: ")
+
+                addZon.AddZona(nombre,capacidad)
+                
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+               
+                
             elif OPCIONES == 2:
-                print()
+                idZonas = input("Ingrese el id de la zona : ")
+                print(tabulate(upZon.updateZonas(idZonas), headers="keys", tablefmt="github"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 3:
-                print()
+                idZonas = input("Ingrese el id de la zona : ")
+                print(tabulate(delZon.DeletePersonal(idZonas), headers="keys", tablefmt="github"))
+                input(f"""
+                
+                      ZONA ELIMINA
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+
+                
             elif OPCIONES == 4:
-                print()
+                idZonas = input("Ingrese el id de la zona : ")
+                print(tabulate(getZon.BuscarZonas(idZonas), headers="keys", tablefmt="github"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
                 break
         except ValueError as error:
@@ -83,11 +104,26 @@ def menuPersonal():
             if OPCIONES == 1:
                 print()
             elif OPCIONES == 2:
-                print()
+                idPersonal = input("Ingrese el id del activo : ")
+                print(tabulate( upPer.updatePesonal(idPersonal), headers="keys", tablefmt="github"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+                
             elif OPCIONES == 3:
-                print()
+                idPersonal = input("Ingrese el id del activo : ")
+                print(tabulate(delPer.DeletePersonal(idPersonal), headers="keys", tablefmt="github"))
+                input(f"""
+                      
+                      PERSONAL ELIMINADO
+
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+                
             elif OPCIONES == 4:
-                print()
+                idPersonal = input("Ingrese el id del activo : ")
+                print(tabulate( getPer.BuscarPersonal(idPersonal), headers="keys", tablefmt="github"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+                
             elif OPCIONES == 5:
                 break
         except ValueError as error:
@@ -124,14 +160,23 @@ def menuActivos():
                 print()
             elif OPCIONES == 2:
                 idActivo = input("Ingrese el id del activo : ")
-                print(tabulate( upAc.updateActivos(idActivo), headers="keys", tablefmt="github"))
-                input(f"""
+                print(tabulate( upAc.updateActivos(idActivo), headers="keys", tablefmt="double_outline"))
+                input(f"""ACTIVO ELIMINADO
+                      
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
                
             elif OPCIONES == 3:
-                print()
+                idActivo = input("Ingrese el id del activo : ")
+                print(tabulate(delAc.deleteActivos(idActivo), headers="keys", tablefmt="double_outline"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+               
             elif OPCIONES == 4:
-                print()
+                idActivo = input("Ingrese el id del activo : ")
+                print(tabulate(getAc.BuscarActivos(idActivo), headers="keys", tablefmt="double_outline"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+                
             elif OPCIONES == 5:
                 break
         except ValueError as error:
@@ -285,7 +330,7 @@ if (__name__ == "__main__"):
         os.system("clear")
         print('''
               
-              
+
                                                                                                                 
                                                                                                                                                                                             
                                               @@@@@@@@@@@@@@@@@@@@@@@
@@ -381,3 +426,4 @@ if (__name__ == "__main__"):
               print(error)
               input("Oprima alguna tecla para continuar con el programa")
 
+    

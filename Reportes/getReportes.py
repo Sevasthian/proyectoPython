@@ -61,8 +61,39 @@ def getAllMarcas():
             allMarca.append(getAllMar)
     return allMarca
 
-# 
+# def getAllCategoria():
+#       datosDeActivo = getAllDataActivos()
+#       datosDeCategoria = getAllDataCategoria()
+#       while True:
+#         try:
+#             print(tabulate(datosDeCategoria, headers="keys", tablefmt="rounded_grid"))
+#             print(f"""
+# Lista de las categorias a selecionar """)
+#             for val in datosDeCategoria:
+#                 print(f"{val['id']}.) {val['Nombre']}")
+         
+#             opcion = int(input('''
+# Seleccione una opción que desea visualisar: '''))
+#             if opcion == 1:
+#                    getAllÑ = []
+#                    if 
+#                    }
+#                    for val in datosDeActivo:
+#                           getAll1 = {
+#                                  "NumeroSerial" : val.get('NroSerial'),
+#                                  "Nombre" : val.get('Nombre'),
+#                                  "Proveedor" : val.get('Proveedor'),
+#                                  "IDcategoria" : val.get('idCategoria')
+#                           }
+#                           getAllÑ.append(getAllÑ)
+#                           return(getAll1)
+#                    print(tabulate(getAllÑ, headers="keys", tablefmt="rounded_grid"))
+#             elif opcion == 2:
+#                    getAllD = []
+#                    for val in datosDeActivo:
+#                           getAll2 = {
 
+#                           }
 
 
 
