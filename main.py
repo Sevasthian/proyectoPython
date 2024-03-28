@@ -55,12 +55,12 @@ def menuZonas():
                 
             elif OPCIONES == 2:
                 idZonas = input("Ingrese el id de la zona : ")
-                print(tabulate(upZon.updateZonas(idZonas), headers="keys", tablefmt="github"))
+                print(tabulate(upZon.updateZonas(idZonas), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 3:
                 idZonas = input("Ingrese el id de la zona : ")
-                print(tabulate(delZon.DeletePersonal(idZonas), headers="keys", tablefmt="github"))
+                print(tabulate(delZon.DeletePersonal(idZonas), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                 
                       ZONA ELIMINA
@@ -69,7 +69,7 @@ def menuZonas():
                 
             elif OPCIONES == 4:
                 idZonas = input("Ingrese el id de la zona : ")
-                print(tabulate(getZon.BuscarZonas(idZonas), headers="keys", tablefmt="github"))
+                print(tabulate(getZon.BuscarZonas(idZonas), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
@@ -105,13 +105,13 @@ def menuPersonal():
                 print()
             elif OPCIONES == 2:
                 idPersonal = input("Ingrese el id del activo : ")
-                print(tabulate( upPer.updatePesonal(idPersonal), headers="keys", tablefmt="github"))
+                print(tabulate( upPer.updatePesonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
                 
             elif OPCIONES == 3:
                 idPersonal = input("Ingrese el id del activo : ")
-                print(tabulate(delPer.DeletePersonal(idPersonal), headers="keys", tablefmt="github"))
+                print(tabulate(delPer.DeletePersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                       
                       PERSONAL ELIMINADO
@@ -120,7 +120,7 @@ def menuPersonal():
                 
             elif OPCIONES == 4:
                 idPersonal = input("Ingrese el id del activo : ")
-                print(tabulate( getPer.BuscarPersonal(idPersonal), headers="keys", tablefmt="github"))
+                print(tabulate( getPer.BuscarPersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
                 
@@ -179,6 +179,11 @@ def menuActivos():
                 
             elif OPCIONES == 5:
                 break
+            elif OPCIONES == 20:
+                idActivo = input("Ingrese el id del activo : ")
+                print(tabulate(delAc.DeletePersonal(idActivo), headers="keys", tablefmt="double_outline"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
         except ValueError as error:
             print(error)
             input("Oprima enter para volver a cargar el programa")
@@ -259,13 +264,25 @@ def menuReportes():
                 input('''
                                        OPRIMA ALGUNA TECLA PARA CONTINUAR...        ''')
             elif OPCIONES == 2:
-                getRep.getAllCategoria()
+                categoria = input("Ingrese el ID de la categoria que decea ver: ")
+                print(tabulate(getRep.getAllCategoria(categoria),headers="keys", tablefmt="rounded_grid"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 3:
-                print()
+                print(tabulate(getRep.getAllDadosDeBajaPorDaño(),headers="keys", tablefmt="rounded_grid"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 4:
-                print()
+                asignaciones = input("Ingrese el ID del activo al que decea ver su asignación: ")
+                print(tabulate(getRep.getAllActivosAsignaciones(asignaciones),headers="keys", tablefmt="rounded_grid"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+                
             elif OPCIONES == 5:
-                print()
+                Historial = input("Igrese el ID del activo al que quiere visualizar su historial: ")
+                print(tabulate(getRep.getAllHistorialDeMovDeActivo(Historial),headers="keys", tablefmt="rounded_grid"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 6:
                 break
         except ValueError as error:

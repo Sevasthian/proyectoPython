@@ -1,6 +1,28 @@
 import requests
 from tabulate import tabulate
 import json
+def BuscarIDdeActivos(id):
+    try:
+        peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
+        peticion.raise_for_status()  
+        return [peticion.json()]
+    except requests.exceptions.RequestException as e:
+        print("Error al realizar la solicitud HTTP:", e)
+        return []  
+    
+
+def getCategoria(categoria):
+    categorias = []
+    for val in getAllDataActivos():
+        if val.get("idCategoria") == categoria:
+            categorias.append(val)
+    return categorias
+def getEstado():
+    categorias = []
+    for val in getAllDataActivos():
+        if val.get("idEstado") == "2":
+            categorias.append(val)
+    return categorias
 def getAllDataActivos():
     try:
             peticion =  requests.get("http://154.38.171.54:5502/activos")
@@ -25,7 +47,7 @@ def getAllDataIdMarca():
         return []
 def getAllDataCategoria():
     try:
-                peticion =  requests.get("http://154.38.171.54:5502/categoriaActivos")
+                peticion =  requests.get("http://154.38.171.54:5502/categoriaActivos/")
                 data = peticion.json()
                 return data
     except requests.RequestException as e:
@@ -61,39 +83,71 @@ def getAllMarcas():
             allMarca.append(getAllMar)
     return allMarca
 
-# def getAllCategoria():
-#       datosDeActivo = getAllDataActivos()
-#       datosDeCategoria = getAllDataCategoria()
-#       while True:
-#         try:
-#             print(tabulate(datosDeCategoria, headers="keys", tablefmt="rounded_grid"))
-#             print(f"""
-# Lista de las categorias a selecionar """)
-#             for val in datosDeCategoria:
-#                 print(f"{val['id']}.) {val['Nombre']}")
-         
-#             opcion = int(input('''
-# Seleccione una opción que desea visualisar: '''))
-#             if opcion == 1:
-#                    getAllÑ = []
-#                    if 
-#                    }
-#                    for val in datosDeActivo:
-#                           getAll1 = {
-#                                  "NumeroSerial" : val.get('NroSerial'),
-#                                  "Nombre" : val.get('Nombre'),
-#                                  "Proveedor" : val.get('Proveedor'),
-#                                  "IDcategoria" : val.get('idCategoria')
-#                           }
-#                           getAllÑ.append(getAllÑ)
-#                           return(getAll1)
-#                    print(tabulate(getAllÑ, headers="keys", tablefmt="rounded_grid"))
-#             elif opcion == 2:
-#                    getAllD = []
-#                    for val in datosDeActivo:
-#                           getAll2 = {
+def getAllCategoria(categoria):
+        activos = []
+        data = getCategoria(categoria)
+        for sev in data:
+                        activos.append({
+                        "NroItem": sev.get('NroItem'),
+                        "CodTransaccion": sev.get('CodTransaccion'),
+                        "NroSerial": sev.get('NroSerial'),
+                        "CodCampus": sev.get('CodCampus'),
+                        "NroFormulario": sev.get('NroFormulario'),
+                        "Nombre": sev.get('Nombre'),
+                        "Proveedor": sev.get('Proveedor'),
+                        "EmpresaResponsable": sev.get('EmpresaResponsable'),
+                        "idMarca": sev.get('idMarca'),
+                        "idCategoria": sev.get('idCategoria'),
+                        "idTipo": sev.get('idTipo'),
+                        "ValorUnitario": sev.get('ValorUnitario'),
+                        "idEstado": sev.get('idEstado'),
+                        "id": sev.get('id'),
+                })
+        return activos
+def getAllDadosDeBajaPorDaño():
+        activos = []
+        data = getEstado()
+        for sev in data:
+                        activos.append({
+                        "NroItem": sev.get('NroItem'),
+                        "CodTransaccion": sev.get('CodTransaccion'),
+                        "NroSerial": sev.get('NroSerial'),
+                        "CodCampus": sev.get('CodCampus'),
+                        "NroFormulario": sev.get('NroFormulario'),
+                        "Nombre": sev.get('Nombre'),
+                        "Proveedor": sev.get('Proveedor'),
+                        "EmpresaResponsable": sev.get('EmpresaResponsable'),
+                        "idMarca": sev.get('idMarca'),
+                        "idCategoria": sev.get('idCategoria'),
+                        "idTipo": sev.get('idTipo'),
+                        "ValorUnitario": sev.get('ValorUnitario'),
+                        "idEstado": sev.get('idEstado'),
+                        "id": sev.get('id'),
+                })
+        return activos
 
-#                           }
 
+def getAllActivosAsignaciones(id):
+        allActivos = []
+        for sev in BuscarIDdeActivos(id):
+          getAllAc={
+                "NroSerial": sev.get('NroSerial'),
+                "Nombre": sev.get('Nombre'),
+                "Asignacion": sev.get('asignaciones')
+                                    }
+          allActivos.append(getAllAc)
+        return allActivos
+def getAllHistorialDeMovDeActivo(id):
+        allActivos = []
+        for sev in BuscarIDdeActivos(id):
+          getAllAc={
+                "NroSerial": sev.get('NroSerial'),
+                "Nombre": sev.get('Nombre'),
+                "Historial de movimiento de activo": sev.get('historialActivos')
+                                    }
+          allActivos.append(getAllAc)
+        return allActivos
+       
+       
 
 
