@@ -1,4 +1,6 @@
-import urllib.parse
+#configuraciones
+from colorama import init, Fore, Style
+import time
 import os
 from tabulate import tabulate
 #agregar
@@ -19,12 +21,34 @@ import Eliminar.deletePersonal as delPer
 import Eliminar.deleteZonas as delZon 
 #reportes
 import Reportes.getReportes as getRep
+#movimiento de activos
+import MenuMovimientoDeActivos.configMovActivos as MovAc
+
+init(autoreset=True)
+
+def clear_screen():
+    if os.name == "posix":
+        os.system("clear")
+    elif os.name == "nt":
+        os.system("cls")
+
+def animate_text(text):
+    for char in text:
+        print(Fore.WHITE + char, end="", flush=True)
+        time.sleep(0.000001) 
+    print(Style.RESET_ALL) 
+
+def animateTextDeLosMenus(text):
+    for char in text:
+        print(Fore.BLUE + char, end="", flush=True)
+        time.sleep(0.001) 
+    print(Style.RESET_ALL) 
 
 
 def menuZonas():
     while True:
-        os.system("clear")
-        print('''
+        clear_screen()
+        animateTextDeLosMenus('''
 
  
   __  __  ______  _   _  _    _         ______ ____   _   _             _____ 
@@ -43,12 +67,8 @@ def menuZonas():
               ''')
         try:
             OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
-            if OPCIONES == 1:
-                nombre = input("Ingrese el nombre de la zona: ")
-                capacidad = input("Ingrese la capacidad de la zona: ")
-
-                addZon.AddZona(nombre,capacidad)
-                
+            if OPCIONES == 1: 
+                print(tabulate(addZon.AddZona(), headers="keys", tablefmt="double_outline"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
                
@@ -83,8 +103,8 @@ def menuZonas():
 
 def menuPersonal():
     while True:
-        os.system("clear")
-        print('''
+        clear_screen()
+        animateTextDeLosMenus('''
 
   __  __  ______  _   _  _    _         _____   ______  _____    _____   ____   _   _            _      
  |  \/  ||  ____|| \ | || |  | |       |  __ \ |  ____||  __ \  / ____| / __ \ | \ | |    /\    | |     
@@ -104,13 +124,13 @@ def menuPersonal():
             if OPCIONES == 1:
                 print()
             elif OPCIONES == 2:
-                idPersonal = input("Ingrese el id del activo : ")
-                print(tabulate( upPer.updatePesonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
+                idPersonal = input("Ingrese el id de la persona a editar: ")
+                print(tabulate( upPer.updatePersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
                 
             elif OPCIONES == 3:
-                idPersonal = input("Ingrese el id del activo : ")
+                idPersonal = input("Ingrese el id del personal : ")
                 print(tabulate(delPer.DeletePersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                       
@@ -135,8 +155,8 @@ def menuPersonal():
 
 def menuActivos():
     while True:
-        os.system("clear")
-        print('''
+        clear_screen()
+        animateTextDeLosMenus('''
 
 
   __  __  ______  _   _  _    _                   _____  _______  _____ __      __ ____    _____ 
@@ -161,7 +181,7 @@ def menuActivos():
             elif OPCIONES == 2:
                 idActivo = input("Ingrese el id del activo : ")
                 print(tabulate( upAc.updateActivos(idActivo), headers="keys", tablefmt="double_outline"))
-                input(f"""ACTIVO ELIMINADO
+                input(f"""
                       
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
                
@@ -179,7 +199,7 @@ def menuActivos():
                 
             elif OPCIONES == 5:
                 break
-            elif OPCIONES == 20:
+            elif OPCIONES == 20051120:
                 idActivo = input("Ingrese el id del activo : ")
                 print(tabulate(delAc.DeletePersonal(idActivo), headers="keys", tablefmt="double_outline"))
                 input(f"""
@@ -194,8 +214,8 @@ def menuActivos():
 
 def menuAsignaciones():
     while True:
-        os.system("clear")
-        print('''
+        clear_screen()
+        animateTextDeLosMenus('''
 
   __  __  ______  _   _  _    _                    _____  _____  _____  _   _            _____  _____  ____   _   _  ______   _____  
  |  \/  ||  ____|| \ | || |  | |           /\     / ____||_   _|/ ____|| \ | |    /\    / ____||_   _|/ __ \ | \ | ||  ____| / ____| 
@@ -233,8 +253,8 @@ def menuAsignaciones():
               input("Oprima alguna tecla para continuar con el programa")
 def menuReportes():
     while True:
-        os.system("clear")
-        print('''
+        clear_screen()
+        animateTextDeLosMenus('''
 
 
   __  __  ______  _   _  _    _         _____   ______  _____    ____   _____  _______  ______   _____ 
@@ -245,8 +265,6 @@ def menuReportes():
  |_|  |_||______||_| \_| \____/        |_|  \_\|______||_|      \____/ |_|  \_\  |_|   |______||_____/ 
                                                                                                        
                                                                                                                                                      
-                                                                                                                                     
-  
                                                                                                  
               1. LISTAR TODOS LOS ACTIVOS
               2. LISTAR ACTIVOS POR CATEGORIA
@@ -266,10 +284,12 @@ def menuReportes():
             elif OPCIONES == 2:
                 categoria = input("Ingrese el ID de la categoria que decea ver: ")
                 print(tabulate(getRep.getAllCategoria(categoria),headers="keys", tablefmt="rounded_grid"))
+                print(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 3:
                 print(tabulate(getRep.getAllDadosDeBajaPorDaño(),headers="keys", tablefmt="rounded_grid"))
+                print(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 4:
@@ -294,8 +314,8 @@ def menuReportes():
 
 def menuMovimientoDeActivos():
     while True:
-        os.system("clear")
-        print('''
+        clear_screen()
+        animateTextDeLosMenus('''
 
 
   __  __  ______  _   _  _    _         __  __   ____ __      __ _____  __  __  _____  ______  _   _  _______  ____  
@@ -325,13 +345,27 @@ def menuMovimientoDeActivos():
         try:
             OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
             if OPCIONES == 1:
-                print()
+                Historial = input("Igrese el ID del activo al que dar como estado no asignado: ")
+                print(tabulate(MovAc.deleteActivos(Historial),headers="keys", tablefmt="double_outline"))
+                input(f"""
+                      
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 2:
-                print()
+                DadoDeBaja = input("Igrese el ID del activo al que dar como estado de dado de baja: ")
+                print(tabulate(MovAc.darActivoPorDeBaja(DadoDeBaja),headers="keys", tablefmt="double_outline"))
+                input(f"""
+                      
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+
+                
             elif OPCIONES == 3:
                 print()
             elif OPCIONES == 4:
-                print()
+                DadoDeBaja = input("Igrese el ID del activo para dar el estado en garantia: ")
+                print(tabulate(MovAc.darActivoPorGarantia(DadoDeBaja),headers="keys", tablefmt="double_outline"))
+                input(f"""
+                      
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
                 
                 break
@@ -344,8 +378,8 @@ def menuMovimientoDeActivos():
         
 if (__name__ == "__main__"):
     while True:
-        os.system("clear")
-        print('''
+        clear_screen()
+        animate_text('''
               
 
                                                                                                                 
@@ -429,10 +463,6 @@ if (__name__ == "__main__"):
             elif OPCIONES == 6:
                 menuMovimientoDeActivos()
 
-
-                input('''
-                      
-                      Oprima enter para volver a cargar el programa''')
                 
             elif OPCIONES == 7:
                 break

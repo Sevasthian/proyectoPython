@@ -3,87 +3,116 @@ import requests
 from tabulate import tabulate
 import os
 import re
+# def GuardarClientes():
+#     cliente = dict()
+#     while True:
+#         try:
+#             if not cliente.get("codigo_cliente"):
+#                 codigo = input(f"Escriba el codigo del cliente: ")
+#                 if re.match(r'^[0-9]+$', codigo) is not None:
+#                     codigo = int(codigo)
+#                     if getOneClienteCodigo(codigo):
+#                         raise Exception("El codigo del cliente ya existe.")
+#                     else:
+#                         cliente["codigo_cliente"] = codigo
+#                 else:
+#                     raise Exception("Codigo ingresado no valido, asegurese de ingresar solo dígitos numéricos")
+                
+#             if not cliente.get("nombre_cliente"):
+#                 nombre = input(f"Ingrese el nombre del cliente: ")
+#                 if re.match(r'^[A-Z][a-zA-Z0-9\s]*$', nombre) is not None:
+#                     cliente["nombre_cliente"] = nombre
+#                 else:
+#                     raise Exception("Nombre no valido, recuerde que todas las palabras deben iniciar con mayúsculas.")
+                
+#             if not cliente.get("nombre_contacto"):
+#                 nombreContacto = input(f"Ingrese el nombre contacto del cliente: ")
+#                 if re.match(r'^[A-Z][a-zA-Z0-9\s]*$', nombreContacto) is not None:
+#                     cliente["nombre_contacto"] = nombreContacto
+#                 else:
+#                     raise Exception("Nombre del contacto no valido, recuerde que todas las palabras deben iniciar con mayúsculas.")
 
+#             if not cliente.get("apellido_contacto"):
+#                 ApellidoContacto = input(f"Ingrese el apellido contacto del cliente: ")
+#                 if re.match(r'^[A-Z][a-zA-Z0-9\s]*$', ApellidoContacto) is not None:
+#                     cliente["apellido_contacto"] = ApellidoContacto
+#                 else:
+#                     raise Exception("Apellido del contacto no valido, recuerde que todas las palabras deben iniciar con mayúsculas.")
+                
+#             if not cliente.get("telefono"):
+#                 telefono = input("Ingrese el número de telefono: ")
+#                 if re.match(r'^\d{1,3} ?\d{4}-?\d{4}$', telefono) is not None:
+#                     if getAllTelefono(telefono):
+#                         raise Exception("El telefono ingresado ya existe.")
+#                     else:
+#                         cliente["telefono"] = telefono
+#                 else:
+#                     raise Exception("Telefono no valido ( ejm: 654352981 o 2 8005-7162 )")
+                
+#             if not cliente.get("fax"):
+#                 fax = input("Ingrese el Fax: ")
+#                 if re.match(r'^\d{1,3} ?\d{4}-?\d{4}$', fax) is not None:
+#                     cliente["fax"] = fax
+#                 else:
+#                     raise Exception("Fax no valido ( ejm: 654352981 o 2 8005-7162 )")
+                
+#             if not cliente.get("linea_direccion1"):
+#                 linea_direccion1 = input(f"Ingrese la linea de direccion 1: ")
+#                 cliente["linea_direccion1"] = linea_direccion1
 
-def GuardarProducto():
-    producto = {}
-    while True:
-        try:
-            if not producto.get("codigo_producto"):
-                codigo = input("Ingrese el codigo del producto: ")
-                if re.match(r'^[A-Z]{2}-\d{3}$', codigo) is not None:
-                    if getProductoCodigo(codigo):
-                        raise Exception("El codigo ingresado ya existe.")
-                    else:
-                        producto["codigo_producto"] = codigo
-                else:
-                    raise Exception(f"El codigo no cumple con el estandar establecido ( ejm: XX-111 ).")
+#             if not cliente.get("linea_direccion2"):
+#                 linea_direccion2 = input(f"Ingrese la linea de direccion 2: ")
+#                 cliente["linea_direccion2"] = linea_direccion2
+
+#             if not cliente.get("ciudad"):
+#                 ciudad = input(f"Ingrese la ciudad: ")
+#                 if re.match(r'^[A-Z][a-zA-Z0-9\s]*$', ciudad) is not None:
+#                     cliente["ciudad"] = ciudad
+#                 else:
+#                     raise Exception("Ciudad no valida, recuerde que todas las palabras deben iniciar con mayúsculas.")
                 
-            if not producto.get("nombre"):
-                nombre = input(f"Ingrese el nombre del producto: ")
-                if re.match(r'^[A-Z][a-zA-Z0-9\s]*$', nombre) is not None:
-                    producto["nombre"] = nombre
-                else:
-                    raise Exception("Nombre no valido, recuerde que todas las palabras deben iniciar con mayúsculas.")
+#             if not cliente.get("region"):
+#                 region = input(f"Ingrese la Region: ")
+#                 if re.match(r'^[A-Z][a-zA-Z0-9\s]*$', region) is not None:
+#                     cliente["region"] = region
+#                 else:
+#                     raise Exception("Region no valida, recuerde que todas las palabras deben iniciar con mayúsculas.")
                 
-            if not producto.get("gama"):
-                gama = input("Ingrese la gama del producto: ")
-                if re.match(r'^[A-Z][a-zA-Z0-9\s.]*$', nombre) is not None:
-                    asd = GG.getAllNombre(gama)
-                    if asd:
-                        producto["gama"] = gama
-                    else:
-                        raise Exception("Gamas validas: ( Herbaceas, Herramientas, Aromáticas, Frutales, Ornamentales )")
-                else:
-                    raise Exception("Gamas validas: ( Herbaceas, Herramientas, Aromáticas, Frutales, Ornamentales )")
+#             if not cliente.get("pais"):
+#                 pais = input(f"Ingrese el pais: ")
+#                 if re.match(r'^[A-Z][a-zA-Z0-9\s]*$', pais) is not None:
+#                     cliente["pais"] = pais
+#                 else:
+#                     raise Exception("Pais no valida, recuerde que todas las palabras deben iniciar con mayúsculas.")
                 
-            if not producto.get("dimensiones"):
-                dimensiones = input("Ingrese las dimensiones del producto: ")
-                if re.match(r'^\d+-\d+$', dimensiones) is not None:
-                    producto["dimensiones"] = dimensiones
-                else:
-                    raise Exception("Dimensiones no válidas, la forma correcta es ( numero-numero ).")
+#             if not cliente.get("codigo_postal"):
+#                 codigo_postal = input("Ingrese el Codigo postal: ")
+#                 if re.match(r'^\d{4,5}$', codigo_postal) is not None:
+#                     cliente["codigo_postal"] = codigo_postal
+#                 else:
+#                     raise Exception("Codigo postal no valido, asegurese de ingresar 4 o 5 dígitos numéricos")
                 
-            if not producto.get("proveedor"): 
-                proveedor = input("Ingrese el proveedor: ")
-                if re.match(r'^[A-Z][a-zA-Z0-9\s.]*$', proveedor) is not None:
-                    producto["proveedor"] = proveedor
-                else:
-                    raise Exception("Proveedor no valido, recuerde que la primera palabra debe iniciar con mayúsculas.")
+#             if not cliente.get("codigo_empleado_rep_ventas"):
+#                 codigo_empleado_rep_ventas = input(f"Escriba el codigo del representante de ventas: ")
+#                 if re.match(r'^[0-9]+$', codigo_empleado_rep_ventas) is not None:
+#                     codigo_empleado_rep_ventas = int(codigo_empleado_rep_ventas)
+#                     cliente["codigo_empleado_rep_ventas"] = codigo_empleado_rep_ventas
+#                 else:
+#                     raise Exception("Codigo ingresado no valido, asegurese de ingresar solo dígitos numéricos")
                 
-            if not producto.get("descripcion"):
-                descripcion = input("Ingrese una descripción: ")
-                producto["descripcion"] = descripcion
-            
-            if not producto.get("cantidadEnStock"):
-                cantidad = input("Ingrese el precio de venta: ")
-                if re.match(r'^[0-9]+$', cantidad) is not None:
-                    cantidad = int(cantidad)
-                    producto["cantidadEnStock"] = cantidad
-                else:
-                    raise Exception("Cantidad no valida, asegurese de ingresar solo dígitos numéricos.")
-                
-            if not producto.get("precio_venta"):
-                PrecioVenta = input("Ingrese el precio de venta: ")
-                if re.match(r'^[0-9]+$', PrecioVenta) is not None:
-                    PrecioVenta = int(PrecioVenta)
-                    producto["precio_venta"] = PrecioVenta
-                else:
-                    raise Exception("Precio de venta no valido, asegurese de ingresar solo dígitos numéricos.")
-                
-            if not producto.get("precio_proveedor"):
-                PrecioProveedor = input("Ingrese el precio del proveedor: ")
-                if re.match(r'^[0-9]+$', PrecioProveedor) is not None:
-                    PrecioProveedor = int(PrecioProveedor)
-                    producto["precio_proveedor"] = PrecioProveedor
-                    break
-                else:
-                    raise Exception("Precio de proveedor no valido, asegurese de ingresar solo dígitos numéricos.")
-        
-        except Exception as error:
-            print(error)                     
-    
-    peticion = requests.post("http://154.38.171.54:5008/actvos", data=json.dumps(producto, indent=4).encode("UTF-8"))
-    res = peticion.json()
-    res["Mensaje"] = "Producto Guardado"
-    return [res]
+#             if not cliente.get("limite_credito"):
+#                 limite_credito = input(f"Escriba el limite de credito: ")
+#                 if re.match(r'^[0-9]+$', limite_credito) is not None:
+#                     limite_credito = float(limite_credito)
+#                     cliente["limite_credito"] = limite_credito
+#                     break
+#                 else:
+#                     raise Exception("Limite de credito ingresado no valido, asegurese de ingresar solo dígitos numéricos")
+                                   
+#         except Exception as error:
+#             print(error)
+
+#     peticion = requests.post("http://154.38.171.54:5001/cliente", data=json.dumps(cliente, indent=4).encode("UTF-8"))
+#     res = peticion.json()
+#     res["Mensaje"] = "Cliente Guardado"
+#     return [res]

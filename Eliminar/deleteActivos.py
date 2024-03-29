@@ -7,30 +7,34 @@ def BuscarIDdeActivos(id):
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
         print("Error al realizar la solicitud HTTP:", e)
-        return []  
-
+        return []
     
 def deleteActivos(id):
-    data = BuscarIDdeActivos(id)
-    data[0]["idEstado"] = "2"
-    if data is None:
-                print(f"""
+    try:
+        data = BuscarIDdeActivos(id)
+        if data[0]["asignaciones"] == []:
+            data[0]["idEstado"] = "2"
+            if data is None:
+                        print(f"""
 
-                    
-    Id del activo no encontrado. """)
-    else:
-        peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0], indent=4).encode("UTF-8"))
-        res = peticion.json()
-        res["Mensaje"] = "Activo Modificado"
-        return [res]
-
-
-
-
+                            
+            Id del activo no encontrado. """)
+            else:
+                peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0], indent=4).encode("UTF-8"))
+                res = peticion.json()
+                res["Mensaje"] = "Activo Modificado"
+                return [res]
+        else:
+            print('''
+                                ESTE ACTIVO NO SE PUEDE ELIMINAR PORQUE SE ENCUENTRA ASIGNADO
+                ''')
+    except Exception as error:
+         print(error)
+         
 def DeletePersonal(id):
     data = BuscarIDdeActivos(id)
     if len(data):
-        peticion = requests.delete(f"http://154.38.171.54:5502/zonas/{id}")
+        peticion = requests.delete(f"http://154.38.171.54:5502/activos/{id}")
         if peticion.status_code == 204:
             data.append({"message":  "Zona eliminado correctamente"})
             return {
