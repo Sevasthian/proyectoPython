@@ -17,6 +17,7 @@ def getCategoria(categoria):
         if val.get("idCategoria") == categoria:
             categorias.append(val)
     return categorias
+
 def getEstado():
     categorias = []
     for val in getAllDataActivos():
@@ -64,6 +65,7 @@ def getAllActivos():
     allActivos = []
     for sev in getAllDataActivos():
           getAllAc={
+                 "ID": sev.get('id'),
                 "NroSerial": sev.get('NroSerial'),
                 "CodCampus": sev.get('CodCampus'),
                 "Nombre": sev.get('Nombre'),
@@ -78,32 +80,42 @@ def getAllMarcas():
             getAllMar = {
                     "ID de la marca": dia.get('id'),
                     "nombreDelProducto": dia.get('Nombre')
-                    
-            }
+                      }
             allMarca.append(getAllMar)
     return allMarca
 
 def getAllCategoria(categoria):
-        activos = []
-        data = getCategoria(categoria)
-        for sev in data:
-                        activos.append({
-                        "NroItem": sev.get('NroItem'),
-                        "CodTransaccion": sev.get('CodTransaccion'),
-                        "NroSerial": sev.get('NroSerial'),
-                        "CodCampus": sev.get('CodCampus'),
-                        "NroFormulario": sev.get('NroFormulario'),
-                        "Nombre": sev.get('Nombre'),
-                        "Proveedor": sev.get('Proveedor'),
-                        "EmpresaResponsable": sev.get('EmpresaResponsable'),
-                        "idMarca": sev.get('idMarca'),
-                        "idCategoria": sev.get('idCategoria'),
-                        "idTipo": sev.get('idTipo'),
-                        "ValorUnitario": sev.get('ValorUnitario'),
-                        "idEstado": sev.get('idEstado'),
-                        "id": sev.get('id'),
-                })
-        return activos
+        while True:
+                try:
+                        activos = []
+                        data = getCategoria(categoria)
+                        for sev in data:
+                                                activos.append({
+                                                "NroItem": sev.get('NroItem'),
+                                                "CodTransaccion": sev.get('CodTransaccion'),
+                                                "NroSerial": sev.get('NroSerial'),
+                                                "CodCampus": sev.get('CodCampus'),
+                                                "NroFormulario": sev.get('NroFormulario'),
+                                                "Nombre": sev.get('Nombre'),
+                                                "Proveedor": sev.get('Proveedor'),
+                                                "EmpresaResponsable": sev.get('EmpresaResponsable'),
+                                                "idMarca": sev.get('idMarca'),
+                                                "idCategoria": sev.get('idCategoria'),
+                                                "idTipo": sev.get('idTipo'),
+                                                "ValorUnitario": sev.get('ValorUnitario'),
+                                                "idEstado": sev.get('idEstado'),
+                                                "id": sev.get('id'),
+                                        })
+                                                
+                        if not activos:
+                               print(''' 
+                                                NO HAY ACTIVOS CON ESTA CATEGORIA''')
+                        return activos
+                
+                        
+                      
+                except Exception as error:
+                       print(error)
 def getAllDadosDeBajaPorDaño():
         activos = []
         data = getEstado()

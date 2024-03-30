@@ -37,7 +37,6 @@ Ingrese el nuevo valor para {datoModificar}: """)
                     break
                 else:
                     data[0][datoModificar] = nuevoValor
-                    print(tabulate(data[0], headers="keys", tablefmt="rounded_grid"))
                     break
             else:
                  print(f"""
