@@ -1,12 +1,19 @@
 import requests
 import json
+from colorama import init, Fore, Style
+import time
+def animateTextDeLosMenus(text):
+    for char in text:
+        print(Fore.YELLOW + char, end="", flush=True)
+        time.sleep(0.001) 
+    print(Style.DIM) 
 def BuscarIDdeActivos(id):
     try:
         peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
         peticion.raise_for_status()  
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
-        print("Error al realizar la solicitud HTTP:", e)
+        animateTextDeLosMenus("Error al realizar la solicitud HTTP:", e)
         return []
     
 def deleteActivos(id):
@@ -15,7 +22,7 @@ def deleteActivos(id):
         if data[0]["asignaciones"] == []:
             data[0]["idEstado"] = "2"
             if data is None:
-                        print(f"""
+                        animateTextDeLosMenus(f"""
 
                             
             Id del activo no encontrado. """)
@@ -25,11 +32,11 @@ def deleteActivos(id):
                 res["Mensaje"] = "Activo Modificado"
                 return [res]
         else:
-            print('''
+            animateTextDeLosMenus('''
                                 ESTE ACTIVO NO SE PUEDE ELIMINAR PORQUE SE ENCUENTRA ASIGNADO
                 ''')
     except Exception as error:
-         print(error)
+         animateTextDeLosMenus(error)
          
 def DeletePersonal(id):
     data = BuscarIDdeActivos(id)

@@ -1,13 +1,20 @@
 import re
 import requests
 import json
+from colorama import init, Fore, Style
+import time
+def animateTextDeLosMenus(text):
+    for char in text:
+        print(Fore.YELLOW + char, end="", flush=True)
+        time.sleep(0.001) 
+    print(Style.DIM) 
 def DataZonas():
     try:
         peticion = requests.get(f"http://154.38.171.54:5502/zonas/")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
-        print("Error al realizar la solicitud HTTP:", e)
+        animateTextDeLosMenus("Error al realizar la solicitud HTTP:", str(e))
         return []  
 
 def BuscarNombreZonas(Nombre):
@@ -40,7 +47,7 @@ def AddZona():
                     raise Exception("La capacidad de la zona solo se registran números")
                                    
         except Exception as error:
-            print(error)
+            animateTextDeLosMenus(str(error))
     peticion = requests.post("http://154.38.171.54:5502/zonas/", data=json.dumps(Zona, indent=4).encode("UTF-8"))
     res = peticion.json()
     res["Mensaje"] = "Zona Guardada"

@@ -2,13 +2,24 @@ import re
 import requests
 import json
 import uuid
+from colorama import init, Fore, Style
+import time
+def animateTextDeLosMenus(text):
+    try: 
+        for char in text:
+            print(Fore.YELLOW + char, end="", flush=True)
+            time.sleep(0.00000000000001)
+    except Exception as error:
+        animateTextDeLosMenus(str(error))
+    finally:
+        print(Style.DIM) 
 def DataPersonal():
     try:
         peticion = requests.get(f"http://154.38.171.54:5502/personas")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
-        print("Error al realizar la solicitud HTTP:", e)
+        animateTextDeLosMenus("No se encontro el ID buscado:",str(e))
         return []  
 
 def BuscarNombreDeElPersonal(Nombre):
@@ -33,7 +44,7 @@ def AddPersonal():
                 
             if not Personal.get("Nombre"):
                 Nombre = input("Ingrese el nombre del personal a agregar: ")
-                if re.match(r'^[A-Z][a-z\s]+$', Nombre) is not None:
+                if re.match(r'^[A-Z][a-z]+(?:\s[A-Z][a-z]+){0,3}$', Nombre) is not None:
                     if BuscarNombreDeElPersonal(Nombre):
                         raise Exception("El nombre de la zona ingresado ya existe.")
                     else:
@@ -41,7 +52,7 @@ def AddPersonal():
                 else:
                     raise Exception("Nombre no valido, recuerde que los nombres inician con mayuculas")
             if not Personal.get("Email"):
-                email = input("Ingrese el email del personal:")
+                email = input("Ingrese el email del personal: ")
                 if re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email) is not None:
                     Personal["Email"] = email
                 else:
@@ -68,27 +79,10 @@ def AddPersonal():
                 break
                                    
         except Exception as error:
-            print(error)
+            animateTextDeLosMenus(str(error))
     peticion = requests.post("http://154.38.171.54:5502/personas/", data=json.dumps(Personal, indent=4).encode("UTF-8"))
     res = peticion.json()
     res["Mensaje"] = "Personal Guardado"
     return [res]
-{
-    "id": "3",
-    "nroId (CC, Nit)": "1003697856",
-    "Nombre": "Miguel Castro",
-    "Email": "miguelcastro@example.com",
-    "Telefonos": [
-      {
-        "movil": {
-          "id": "3",
-          "num": "3002014592"
-        },
-        "casa": {
-          "id": "3",
-          "num": "3002014593"
-        }
-      }
-    ]
-  }
+
 

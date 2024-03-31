@@ -1,6 +1,13 @@
+from colorama import init, Fore, Style
+import time
 from tabulate import tabulate
 import requests
 import json
+def animateTextDeLosMenus(text):
+    for char in text:
+        print(Fore.YELLOW + char, end="", flush=True)
+        time.sleep(0.001) 
+    print(Style.DIM) 
 
 def BuscarIDdeActivos(id):
     peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
@@ -10,17 +17,17 @@ def BuscarIDdeActivos(id):
 def updateActivos(id):
     data = BuscarIDdeActivos(id)
     if data is None:
-            print(f"""
+            animateTextDeLosMenus(f"""
 
 Id del activo no encontrado. """)
     
     while True:
         try:
             print()
-            print(f"""
+            animateTextDeLosMenus(f"""
 Datos para modificar: """)
             for i, (val, sev) in enumerate(data[0].items()):
-                print(f"{i+1}. {val}")
+                animateTextDeLosMenus(f"{i+1}. {val}")
 
             opcion = int(input(f"""
 Seleccione una opción: """))
@@ -28,7 +35,7 @@ Seleccione una opción: """))
             if datoModificar in data[0]:
                 if datoModificar == "historialActivos" or "asignaciones":
                     print()
-                    print('''   
+                    animateTextDeLosMenus('''   
                                         ESTOS DATOS NO SE PUEDEN MODIFICAR''')
                     break
                 else:
@@ -39,11 +46,11 @@ Seleccione una opción: """))
                     break
             else:
                  print()
-                 print(f"""
+                 animateTextDeLosMenus(f"""
 Seleccion incorrecta""")
                 
         except ValueError as error:
-            print(error)
+            animateTextDeLosMenus(error)
     
     peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0], indent=4).encode("UTF-8"))
     res = peticion.json()

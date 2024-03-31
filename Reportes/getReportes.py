@@ -1,13 +1,20 @@
 import requests
 from tabulate import tabulate
 import json
+from colorama import init, Fore, Style
+import time
+def animateTextDeLosMenus(text):
+    for char in text:
+        print(Fore.YELLOW + char, end="", flush=True)
+        time.sleep(0.001) 
+    print(Style.DIM) 
 def BuscarIDdeActivos(id):
     try:
         peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
         peticion.raise_for_status()  
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
-        print("Error al realizar la solicitud HTTP:", e)
+        animateTextDeLosMenus("Error al realizar la solicitud HTTP:", e)
         return []  
     
 
@@ -24,16 +31,23 @@ def getEstado():
         if val.get("idEstado") == "2":
             categorias.append(val)
     return categorias
+def getAsignaciones():
+    asignaciones_presentes = []
+    for val in getAllDataActivos():
+        asignaciones = val.get("asignaciones")
+        if asignaciones: 
+            asignaciones_presentes.append(val)
+    return asignaciones_presentes
 def getAllDataActivos():
     try:
             peticion =  requests.get("http://154.38.171.54:5502/activos")
             data = peticion.json()
             return data
     except requests.RequestException as e:
-            print("Error en la solicitud HTTP:", e)
+            animateTextDeLosMenus("Error en la solicitud HTTP:", e)
             return []
     except ValueError as e:
-            print("Error al cargar JSON:", e)
+            animateTextDeLosMenus("Error al cargar JSON:", e)
             return []
 def getAllDataIdMarca():
         try:
@@ -41,10 +55,10 @@ def getAllDataIdMarca():
                 data = peticion.json()
                 return data
         except requests.RequestException as e:
-                print("Error en la solicitud HTTP:", e)
+                animateTextDeLosMenus("Error en la solicitud HTTP:", e)
                 return []
         except ValueError as e:
-                print("Error al cargar JSON:", e)
+                animateTextDeLosMenus("Error al cargar JSON:", e)
         return []
 def getAllDataCategoria():
     try:
@@ -52,10 +66,10 @@ def getAllDataCategoria():
                 data = peticion.json()
                 return data
     except requests.RequestException as e:
-                print("Error en la solicitud HTTP:", e)
+                animateTextDeLosMenus("Error en la solicitud HTTP:", e)
                 return []
     except ValueError as e:
-                print("Error al cargar JSON:", e)
+                animateTextDeLosMenus("Error al cargar JSON:", e)
     return []
       
       
@@ -108,14 +122,14 @@ def getAllCategoria(categoria):
                                         })
                                                 
                         if not activos:
-                               print(''' 
+                               animateTextDeLosMenus(''' 
                                                 NO HAY ACTIVOS CON ESTA CATEGORIA''')
                         return activos
                 
                         
                       
                 except Exception as error:
-                       print(error)
+                       animateTextDeLosMenus(error)
 def getAllDadosDeBajaPorDaño():
         activos = []
         data = getEstado()
@@ -139,18 +153,20 @@ def getAllDadosDeBajaPorDaño():
         return activos
 
 
-def getAllActivosAsignaciones(id):
+def getAllActivosAsignaciones():
         allActivos = []
-        for sev in BuscarIDdeActivos(id):
-          getAllAc={
+        data = getAsignaciones()
+        for sev in data:
+          allActivos.append({
                 "NroSerial": sev.get('NroSerial'),
                 "Nombre": sev.get('Nombre'),
                 "Asignacion": sev.get('asignaciones')
-                                    }
-          allActivos.append(getAllAc)
+                                    })
+          
         return allActivos
 def getAllHistorialDeMovDeActivo(id):
         allActivos = []
+
         for sev in BuscarIDdeActivos(id):
           getAllAc={
                 "NroSerial": sev.get('NroSerial'),

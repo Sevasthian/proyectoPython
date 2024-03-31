@@ -36,27 +36,58 @@ def clearPantalla():
     elif os.name == "nt":
         os.system("cls")
 
-def animate_text(text):
-    for char in text:
-        print(Fore.CYAN + char, end="", flush=True)
-        time.sleep(0.000001)
-    print(Style.RESET_ALL) 
+def animateTextDeLosMenusCyan(text):
+    try: 
+        for char in text:
+            print(Fore.CYAN + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Oprima alguna tecla para continuar con el programa")
+def animateTextDeLosMenusGreen(text):
+    try: 
+        for char in text:
+            print(Fore.GREEN + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Oprima alguna tecla para continuar con el programa")
+def animateTextDeLosMenusMagenta(text):
+    try: 
+        for char in text:
+            print(Fore.MAGENTA + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Oprima alguna tecla para continuar con el programa")
 
-def animateTextDeLosMenus(text):
-    for char in text:
-        print(Fore.RED + char, end="", flush=True)
-        time.sleep(0.001) 
-    print(Style.DIM) 
-def animateTextDeReportes(text):
-    for char in text:
-        print(Fore.YELLOW + char, end="", flush=True)
-    print(Style.RESET_ALL) 
+def animateTextDeLosMenusRed(text):
+    try: 
+        for char in text:
+            print(Fore.RED + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Oprima alguna tecla para continuar con el programa")
+def animateTextDeLosMenusYellow(text):
+    try: 
+        for char in text:
+            print(Fore.YELLOW + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Oprima alguna tecla para continuar con el programa")
 #**************************************************************************************************************************************************************
 #                                                             Menu de Zonas
 def menuZonas():
     while True:
         clearPantalla()
-        animateTextDeLosMenus(''' 
+        animateTextDeLosMenusRed(''' 
   __  __  ______  _   _  _    _         ______ ____   _   _             _____ 
  |  \/  ||  ____|| \ | || |  | |       |___  // __ \ | \ | |    /\     / ____|
  | \  / || |__   |  \| || |  | |          / /| |  | ||  \| |   /  \   | (___  
@@ -74,40 +105,40 @@ def menuZonas():
         try:
             OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
             if OPCIONES == 1: 
-                animateTextDeLosMenus(tabulate(addZon.AddZona(), headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusMagenta(tabulate(addZon.AddZona(), headers="keys", tablefmt="double_outline"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)  
             elif OPCIONES == 2:
                 idZonas = input("Ingrese el id de la zona : ")
-                animateTextDeLosMenus(tabulate(upZon.updateZonas(idZonas), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate(upZon.updateZonas(idZonas), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 3:
                 idZonas = input("Ingrese el id de la zona : ")
-                animateTextDeLosMenus(tabulate(delZon.DeletePersonal(idZonas), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate(delZon.DeletePersonal(idZonas), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                 
                       ZONA ELIMINA
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 4:
                 idZonas = input("Ingrese el id de la zona : ")
-                animateTextDeLosMenus(tabulate(getZon.BuscarZonas(idZonas), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate(getZon.BuscarZonas(idZonas), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
                 break
         except ValueError as error:
-            animateTextDeLosMenus(error)
+            animateTextDeLosMenusGreen(str(error))
             input("Oprima enter para volver a cargar el programa")
         except KeyboardInterrupt as error:
-              animateTextDeLosMenus(error)
+              animateTextDeLosMenusGreen("Por favor cierre correctamente el programa  ",str(error))
               input("Oprima alguna tecla para continuar con el programa")
 #***********************************************************************************************************************************************************************************
 #                                                                Menu Personal
 def menuPersonal():
     while True:
         clearPantalla()
-        animateTextDeLosMenus('''
+        animateTextDeLosMenusRed('''
 
   __  __  ______  _   _  _    _         _____   ______  _____    _____   ____   _   _            _      
  |  \/  ||  ____|| \ | || |  | |       |  __ \ |  ____||  __ \  / ____| / __ \ | \ | |    /\    | |     
@@ -125,17 +156,17 @@ def menuPersonal():
         try:
             OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
             if OPCIONES == 1:
-                animateTextDeLosMenus(tabulate( addPer.AddPersonal(), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate( addPer.AddPersonal(), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 2:
                 idPersonal = input("Ingrese el id de la persona a editar: ")
-                animateTextDeLosMenus(tabulate( upPer.updatePersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate( upPer.updatePersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 3:
                 idPersonal = input("Ingrese el id del personal : ")
-                animateTextDeLosMenus(tabulate(delPer.DeletePersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate(delPer.DeletePersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                       
                       PERSONAL ELIMINADO
@@ -143,23 +174,23 @@ def menuPersonal():
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 4:
                 idPersonal = input("Ingrese el id del activo : ")
-                animateTextDeLosMenus(tabulate( getPer.BuscarPersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate( getPer.BuscarPersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
                 break
         except ValueError as error:
-            animateTextDeLosMenus(error)
+            animateTextDeLosMenusGreen(str(error))
             input("Oprima enter para volver a cargar el programa")
         except KeyboardInterrupt as error:
-              animateTextDeLosMenus(error)
+              animateTextDeLosMenusGreen("Por favor cierre el programa correctamente ", str(error))
               input("Oprima alguna tecla para continuar con el programa")
 #**************************************************************************************************************************************************************************************
 #                                                                   Menu de activos
 def menuActivos():
     while True:
         clearPantalla()
-        animateTextDeLosMenus('''
+        animateTextDeLosMenusRed('''
   __  __  ______  _   _  _    _                   _____  _______  _____ __      __ ____    _____ 
  |  \/  ||  ____|| \ | || |  | |           /\    / ____||__   __||_   _|\ \    / // __ \  / ____|
  | \  / || |__   |  \| || |  | |          /  \  | |        | |     | |   \ \  / /| |  | || (___  
@@ -178,45 +209,45 @@ def menuActivos():
         try:
             OPCIONES= int(input("Ingrese el número de la seleccion deseada: "))
             if OPCIONES == 1:
-                animateTextDeLosMenus(tabulate( addAc.AddActivo(), headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusMagenta(tabulate( addAc.AddActivo(), headers="keys", tablefmt="double_outline"))
                 input(f"""
                       
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 2:
                 idActivo = input("Ingrese el id del activo : ")
-                animateTextDeLosMenus(tabulate( upAc.updateActivos(idActivo), headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusMagenta(tabulate( upAc.updateActivos(idActivo), headers="keys", tablefmt="double_outline"))
                 input(f"""
                       
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 3:
                 idActivo = input("Ingrese el id del activo : ")
-                animateTextDeLosMenus(tabulate(delAc.deleteActivos(idActivo), headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusMagenta(tabulate(delAc.deleteActivos(idActivo), headers="keys", tablefmt="double_outline"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 4:
                 idActivo = input("Ingrese el id del activo : ")
-                animateTextDeLosMenus(tabulate(getAc.BuscarActivos(idActivo), headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusMagenta(tabulate(getAc.BuscarActivos(idActivo), headers="keys", tablefmt="double_outline"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
                 break
             elif OPCIONES == 20051120:
                 idActivo =input("Ingrese el id del activo : ")
-                animateTextDeLosMenus(tabulate(delAc.DeletePersonal(idActivo), headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusMagenta(tabulate(delAc.DeletePersonal(idActivo), headers="keys", tablefmt="double_outline"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
         except ValueError as error:
-            animateTextDeLosMenus(error)
+            animateTextDeLosMenusGreen(str(error))
             input("Oprima enter para volver a cargar el programa")
         except KeyboardInterrupt as error:
-              animateTextDeLosMenus(error)
+              animateTextDeLosMenusGreen("Por favor cierre el programa correctamente  ", str(error))
               input("Oprima alguna tecla para continuar con el programa")
 #*********************************************************************************************************************************************************************************************************************************
 #                                                                            Menu de asignaciones en activos
 def menuAsignaciones():
     while True:
         clearPantalla()
-        animateTextDeLosMenus('''
+        animateTextDeLosMenusRed('''
   __  __  ______  _   _  _    _                    _____  _____  _____  _   _            _____  _____  ____   _   _  ______   _____  
  |  \/  ||  ____|| \ | || |  | |           /\     / ____||_   _|/ ____|| \ | |    /\    / ____||_   _|/ __ \ | \ | ||  ____| / ____| 
  | \  / || |__   |  \| || |  | |          /  \   | (___    | | | |  __ |  \| |   /  \  | |       | | | |  | ||  \| || |__   | (___   
@@ -229,10 +260,7 @@ def menuAsignaciones():
                       | |  | ||  __|                / /\ \ | |        | |     | |    \ \/ / | |  | | \___ \                       
                       | |__| || |____              / ____ \| |____    | |    _| |_    \  /  | |__| | ____) |                      
                       |_____/ |______|            /_/    \_\\_____|   |_|   |_____|    \/    \____/ |_____/                       
-                                                                                                                                     
-                                                                                                                                     
-  
-                                                                                                 
+                                                                                                                                                                                                                            
                                         1. CREAR ASIGNACION
                                         2. BUSCAR ASIGNACION
                                         3. REGRESAR AL MENU PRINCIPAL
@@ -240,23 +268,31 @@ def menuAsignaciones():
         try:
             OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
             if OPCIONES == 1:
-                print()
+                idActivo =input("Ingrese el id del activo : ")
+                animateTextDeLosMenusMagenta(tabulate(MenAsig.CrearAsignacion(idActivo), headers="keys", tablefmt="double_outline"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+                
             elif OPCIONES == 2:
-                print()
+                idActivo =input("Ingrese el id del activo : ")
+                animateTextDeLosMenusMagenta(tabulate(MenAsig.buscarAsignaciones(idActivo), headers="keys", tablefmt="double_outline"))
+                input(f"""
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
+                
             elif OPCIONES == 3:
                 break
         except ValueError as error:
-            animateTextDeLosMenus(error)
+            animateTextDeLosMenusGreen(str(error))
             input("Oprima enter para volver a cargar el programa")
         except KeyboardInterrupt as error:
-              animateTextDeLosMenus(error)
+              animateTextDeLosMenusGreen("Por favor cierre el programa correctamente ", str(error))
               input("Oprima alguna tecla para continuar con el programa")
 #**************************************************************************************************************************************************************************************************************************************************************
 #                                                                               Menu de reportes
 def menuReportes():
     while True:
         clearPantalla()
-        animateTextDeLosMenus('''
+        animateTextDeLosMenusRed('''
   __  __  ______  _   _  _    _         _____   ______  _____    ____   _____  _______  ______   _____ 
  |  \/  ||  ____|| \ | || |  | |       |  __ \ |  ____||  __ \  / __ \ |  __ \|__   __||  ____| / ____|
  | \  / || |__   |  \| || |  | |       | |__) || |__   | |__) || |  | || |__) |  | |   | |__   | (___  
@@ -277,50 +313,50 @@ def menuReportes():
         try:
             OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
             if OPCIONES == 1:
-                animateTextDeReportes(tabulate(getRep.getAllActivos(), headers="keys", tablefmt="rounded_grid"))
-                animateTextDeReportes(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate(getRep.getAllActivos(), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusYellow(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
                 input('''
                                        OPRIMA ALGUNA TECLA PARA CONTINUAR...        ''')
             elif OPCIONES == 2:
-                animateTextDeReportes(tabulate(addAc.TablaCategoria(),headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusYellow(tabulate(addAc.TablaCategoria(),headers="keys", tablefmt="rounded_grid"))
                 categoria = input("Ingrese el ID de la categoria que decea ver: ")
-                animateTextDeReportes(tabulate(getRep.getAllCategoria(categoria),headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate(getRep.getAllCategoria(categoria),headers="keys", tablefmt="rounded_grid"))
                 data = getRep.getAllCategoria(categoria)
                 if data:
-                    animateTextDeReportes(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
-                    animateTextDeReportes(tabulate(addAc.TablaTipoActivo(),headers="keys", tablefmt="rounded_grid"))
-                    animateTextDeReportes(tabulate(addAc.TablaTipoActivo(),headers="keys", tablefmt="rounded_grid"))
+                    animateTextDeLosMenusYellow(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
+                    animateTextDeLosMenusYellow(tabulate(addAc.TablaTipoActivo(),headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 3:
-                animateTextDeReportes(tabulate(getRep.getAllDadosDeBajaPorDaño(),headers="keys", tablefmt="rounded_grid"))
-                animateTextDeReportes(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate(getRep.getAllDadosDeBajaPorDaño(),headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusYellow(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusYellow(tabulate(addAc.TablaCategoria(),headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusYellow(tabulate(addAc.TablaTipoActivo(),headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 4:
-                asignaciones = input("Ingrese el ID del activo al que decea ver su asignación: ")
-                animateTextDeReportes(tabulate(getRep.getAllActivosAsignaciones(asignaciones),headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate(getRep.getAllActivosAsignaciones(),headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
                 Historial = input("Igrese el ID del activo al que quiere visualizar su historial: ")
-                animateTextDeReportes(tabulate(getRep.getAllHistorialDeMovDeActivo(Historial),headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate(getRep.getAllHistorialDeMovDeActivo(Historial),headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 6:
                 break
         except ValueError as error:
-            animateTextDeLosMenus(error)
+            animateTextDeLosMenusGreen(str(error))
             input("Oprima enter para volver a cargar el programa")
         except KeyboardInterrupt as error:
-              animateTextDeLosMenus(error)
+              animateTextDeLosMenusGreen("Por favor cierre el programa correctamente  ",str(error))
               input("Oprima alguna tecla para continuar con el programa")
 #****************************************************************************************************************************************************************************************************************************************
 #                                                                  Menu de movimiento de activos
 def menuMovimientoDeActivos():
     while True:
         clearPantalla()
-        animateTextDeLosMenus('''
+        animateTextDeLosMenusRed('''
   __  __  ______  _   _  _    _         __  __   ____ __      __ _____  __  __  _____  ______  _   _  _______  ____  
  |  \/  ||  ____|| \ | || |  | |       |  \/  | / __ \\ \    / /|_   _||  \/  ||_   _||  ____|| \ | ||__   __|/ __ \ 
  | \  / || |__   |  \| || |  | |       | \  / || |  | |\ \  / /   | |  | \  / |  | |  | |__   |  \| |   | |  | |  | |
@@ -333,10 +369,6 @@ def menuMovimientoDeActivos():
                | |  | ||  __|           / /\ \ | |        | |     | |    \ \/ / | |  | | \___ \                      
                | |__| || |____         / ____ \| |____    | |    _| |_    \  /  | |__| | ____) |                     
                |_____/ |______|       /_/    \_\\_____|   |_|   |_____|    \/    \____/ |_____/                      
-                                                                                                                     
-                                                                                                                     
-                                                                
-  
                                                                                                  
                                     1. RETORNO DE ACTIVO
                                     2. DAR DE BAJA ACTIVO
@@ -349,38 +381,43 @@ def menuMovimientoDeActivos():
             OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
             if OPCIONES == 1:
                 Historial = input("Igrese el ID del activo al que dar como estado no asignado: ")
-                animateTextDeLosMenus(tabulate(MovAc.deleteActivos(Historial),headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusMagenta(tabulate(MovAc.deleteActivos(Historial),headers="keys", tablefmt="double_outline"))
                 input(f"""
+                      ACTIVO RETORNADO
                       
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 2:
                 DadoDeBaja = input("Igrese el ID del activo al que dar como estado de dado de baja: ")
-                animateTextDeLosMenus(tabulate(MovAc.darActivoPorDeBaja(DadoDeBaja),headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusMagenta(tabulate(MovAc.darActivoPorDeBaja(DadoDeBaja),headers="keys", tablefmt="double_outline"))
                 input(f"""
                       
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 3:
-                print()
+                DadoDeBaja = input("Igrese el ID del activo para reasignar: ")
+                animateTextDeLosMenusMagenta(tabulate(MovAc.reasignarActivo(DadoDeBaja),headers="keys", tablefmt="double_outline"))
+                input(f"""
+                      
+                                         OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 4:
                 DadoDeBaja = input("Igrese el ID del activo para dar el estado en garantia: ")
-                animateTextDeLosMenus(tabulate(MovAc.darActivoPorGarantia(DadoDeBaja),headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusMagenta(tabulate(MovAc.darActivoPorGarantia(DadoDeBaja),headers="keys", tablefmt="double_outline"))
                 input(f"""
                       
                                          OPRIMA UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
                 break
         except ValueError as error:
-            animateTextDeLosMenus(error)
+            animateTextDeLosMenusGreen(str(error))
             input("Oprima enter para volver a cargar el programa")
         except KeyboardInterrupt as error:
-              animateTextDeLosMenus(error)
+              animateTextDeLosMenusGreen("Por favor cierre el programa correctamente  ", str(error))
               input("Oprima alguna tecla para continuar con el programa")
 #********************************************************************************************************************************************************************************************************************************************************************************
 #                                                                                         Menu principal        
 if (__name__ == "__main__"):
     while True:
         clearPantalla()
-        animate_text('''
+        animateTextDeLosMenusCyan('''
               
 
                                                                                                                 
@@ -447,31 +484,24 @@ if (__name__ == "__main__"):
         try:
             OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
             if OPCIONES == 1:
-                menuActivos()
-                
+                menuActivos() 
             elif OPCIONES == 2:
                 menuPersonal()
-
             elif OPCIONES == 3:
                 menuZonas()
-
             elif OPCIONES == 4:
                 menuAsignaciones()
-                
             elif OPCIONES == 5:
                 menuReportes()
-
             elif OPCIONES == 6:
                 menuMovimientoDeActivos()
-
-                
             elif OPCIONES == 7:
                 break
         except ValueError as error:
-            animateTextDeLosMenus(error)
+            animateTextDeLosMenusGreen(str(error))
             input("Oprima enter para volver a cargar el programa")
         except KeyboardInterrupt as error:
-              animateTextDeLosMenus(error)
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
               input("Oprima alguna tecla para continuar con el programa")
 
     
