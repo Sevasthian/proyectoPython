@@ -1,27 +1,74 @@
+# import
 import json
 import requests
-from tabulate import tabulate
-import uuid
 import os
 import re
-from colorama import init, Fore, Style
+import uuid
 import time
-def animateTextDeLosMenus(text):
+# diseño
+from tabulate import tabulate
+from colorama import init, Fore, Style
+#**************************************************************************************************************************************************************************************************************************
+#                                                                                        colores
+def clearPantalla():
+    if os.name == "posix":
+        os.system("clear")
+    elif os.name == "nt":
+        os.system("cls")
+def animateTextDeLosMenusCyan(text):
+    try: 
+        for char in text:
+            print(Fore.CYAN + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+def animateTextDeLosMenusGreen(text):
+    try: 
+        for char in text:
+            print(Fore.GREEN + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+def animateTextDeLosMenusMagenta(text):
+    try: 
+        for char in text:
+            print(Fore.MAGENTA + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+def animateTextDeLosMenusRed(text):
+    try: 
+        for char in text:
+            print(Fore.RED + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+def animateTextDeLosMenusYellow(text):
     try: 
         for char in text:
             print(Fore.YELLOW + char, end="", flush=True)
-            time.sleep(0.00000000000001)
     except Exception as error:
-        animateTextDeLosMenus(str(error))
-    finally:
-        print(Style.DIM) 
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+#*******************************************************************************************************************************************************************************************************************************
+#                                                                                      busquedas json
 def DataMarcas():
     try:
         peticion = requests.get(f"http://154.38.171.54:5502/marcas")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
-        animateTextDeLosMenus("No se encontro la data marcas:", str(e))
+        animateTextDeLosMenusGreen("No se encontro la data marcas:", str(e))
         return []  
 def DataCategoria():
     try:
@@ -29,7 +76,7 @@ def DataCategoria():
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
-        animateTextDeLosMenus("No se encontro la data categoria: ", str(e))
+        animateTextDeLosMenusGreen("No se encontro la data categoria: ", str(e))
         return []  
 def DataTipoDeActivo():
     try:
@@ -37,9 +84,18 @@ def DataTipoDeActivo():
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
-        animateTextDeLosMenus("No se encontro la data Tipo de activo: ", str(e))
+        animateTextDeLosMenusGreen("No se encontro la data Tipo de activo: ", str(e))
         return []  
-    
+def DataActivos():
+    try:
+        peticion = requests.get(f"http://154.38.171.54:5502/activos")
+        peticion.raise_for_status()  
+        return peticion.json()
+    except requests.exceptions.RequestException as e:
+        animateTextDeLosMenusGreen("No se encontro la data activos: ", str(e))
+        return []  
+#*********************************************************************************************************************************************************************************************************************************************************
+#                                                                                                      tablas
 def TablaTipoActivo():
     data = DataTipoDeActivo()
     list = []
@@ -63,8 +119,7 @@ def TablaCategoria():
                 
           }
         list.append(getAllAc)
-    return list
-    
+    return list   
 def TablaMarcas():
     data = DataMarcas()
     list = []
@@ -77,32 +132,32 @@ def TablaMarcas():
           }
         list.append(getAllAc)
     return list
-
-def DataActivos():
-    try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos")
-        peticion.raise_for_status()  
-        return peticion.json()
-    except requests.exceptions.RequestException as e:
-        animateTextDeLosMenus("No se encontro la data activos: ", str(e))
-        return []  
-
+#*************************************************************************************************************************************************************************************************************************************************************
+#                                                                                                      filtros
 def BuscarNombreDelActivo(Nombre):
-    for val in DataActivos():
-        if val.get("Nombre")  == Nombre:
-            return [val]
+    try:
+        for val in DataActivos():
+            if val.get("Nombre")  == Nombre:
+                return [val]
+    except requests.exceptions.RequestException as e:
+        animateTextDeLosMenusGreen("El nombre no exite en la base de datos: ", str(e))
+        return []
 def BuscarNroID(Nro):
-    for val in DataActivos():
-        if val.get("NroItem") == Nro:
-            return [val]
-
-
+    try:
+        for val in DataActivos():
+            if val.get("NroItem") == Nro:
+                return [val]
+    except requests.exceptions.RequestException as e:
+        animateTextDeLosMenusGreen("Numero de item no encontrado en la base de datos: ", str(e))
+        return []
+#**********************************************************************************************************************************************************************************************************************************************
+#                                                                                                     añadir activo
 def AddActivo():
     Activo = {}
     while True:
         try:     
             if not Activo.get("NroItem"):
-                animateTextDeLosMenus('''
+                animateTextDeLosMenusMagenta('''
 
   ______  __  __  _____   ______  _____  ______  __  __   ____    _____                                                                    
  |  ____||  \/  ||  __ \ |  ____|/ ____||  ____||  \/  | / __ \  / ____|           /\                                                      
@@ -161,21 +216,21 @@ def AddActivo():
                 Empresa = str("Campuslands")
                 Activo["EmpresaResponsable"] = Empresa
             if not Activo.get("idMarca"):
-                animateTextDeLosMenus(tabulate(TablaMarcas(), headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusYellow(tabulate(TablaMarcas(), headers="keys", tablefmt="double_outline"))
                 IdMarca = input("Ingrese el ID de la marca según la tabla: ")
                 if re.match(r"[1-7]+", IdMarca) is not None:
                     Activo["IdMarca"] = IdMarca
                 else:
                     raise Exception("Por favor solo ingrese algun ID que estan en la tabla")
             if not Activo.get("idCategoria"):
-                animateTextDeLosMenus(tabulate(TablaCategoria(), headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusYellow(tabulate(TablaCategoria(), headers="keys", tablefmt="double_outline"))
                 IdCategoria = input("Ingrese una el ID de una categoria que aparesca en la tabla: ")
                 if re.match(r"[1-3]+", IdCategoria) is not None:
                     Activo["idCategoria"]= IdCategoria
                 else:
                     raise Exception("Por favor solo ingrese algún ID que aparesca en la tabla")
             if not Activo.get("idTipo"):
-                animateTextDeLosMenus(tabulate(TablaTipoActivo(), headers="keys", tablefmt="double_outline"))
+                animateTextDeLosMenusYellow(tabulate(TablaTipoActivo(), headers="keys", tablefmt="double_outline"))
                 IdTipo = input("Ingrese el ID del tipo de activo que va a agregar: ")
                 if re.match(r"[1-8]+",IdTipo) is not None:
                     Activo["idTipo"] = IdTipo
@@ -200,7 +255,7 @@ def AddActivo():
                 Activo["asignaciones"] = asig
                 break                                   
         except Exception as error:
-            animateTextDeLosMenus(str(error))
+            animateTextDeLosMenusGreen(str(error))
     peticion = requests.post("http://154.38.171.54:5502/activos/", data=json.dumps(Activo, indent=4).encode("UTF-8"))
     res = peticion.json()
     res["Mensaje"] = "Activo Guardado"

@@ -1,13 +1,19 @@
+#import
 import requests
-from tabulate import tabulate
 import json
-from colorama import init, Fore, Style
 import time
+#diseño
+from tabulate import tabulate
+from colorama import init, Fore, Style
+#***********************************************************************************************************************************************************************************************
+#                                                                                           colores
 def animateTextDeLosMenus(text):
     for char in text:
         print(Fore.YELLOW + char, end="", flush=True)
         time.sleep(0.001) 
     print(Style.DIM) 
+#***********************************************************************************************************************************************************************************************
+#                                                                                          busquedas
 def BuscarIDdeActivos(id):
     try:
         peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
@@ -16,28 +22,6 @@ def BuscarIDdeActivos(id):
     except requests.exceptions.RequestException as e:
         animateTextDeLosMenus("Error al realizar la solicitud HTTP:", e)
         return []  
-    
-
-def getCategoria(categoria):
-    categorias = []
-    for val in getAllDataActivos():
-        if val.get("idCategoria") == categoria:
-            categorias.append(val)
-    return categorias
-
-def getEstado():
-    categorias = []
-    for val in getAllDataActivos():
-        if val.get("idEstado") == "2":
-            categorias.append(val)
-    return categorias
-def getAsignaciones():
-    asignaciones_presentes = []
-    for val in getAllDataActivos():
-        asignaciones = val.get("asignaciones")
-        if asignaciones: 
-            asignaciones_presentes.append(val)
-    return asignaciones_presentes
 def getAllDataActivos():
     try:
             peticion =  requests.get("http://154.38.171.54:5502/activos")
@@ -71,10 +55,59 @@ def getAllDataCategoria():
     except ValueError as e:
                 animateTextDeLosMenus("Error al cargar JSON:", e)
     return []
-      
-      
+#*********************************************************************************************************************************************************************************************
+#                                                                                       filtros
+def getCategoria(categoria):
+    categorias = []
+    for val in getAllDataActivos():
+        if val.get("idCategoria") == categoria:
+            categorias.append(val)
+    return categorias
+def getAllValidosdeAsignaciones():
+    try:
+        asignaciones = []
+        data = getAllDataActivos()  # Corregir llamada de función
+        for sev in data:
+            # Suponiendo que 'asignaciones' es un campo en sev
+            if sev.get('asignaciones') is not None:  # Comprobar si 'asignaciones' existe y no es None
+                asignaciones.append(sev.get('asignaciones'))  # Agregar 'asignaciones' a la lista
+        return asignaciones
+    except Exception as e:  # Manejar cualquier excepción, no solo requests.exceptions.RequestException
+        print("Ha ocurrido un error:", e)
+        return []
+        
+def getEstado():
+    categorias = []
+    for val in getAllDataActivos():
+        if val.get("idEstado") == "2":
+            categorias.append(val)
+    return categorias
+def SoloMuestraDatosDeAsignaciones():
+    try:
+        asignaciones_presentes = []
+        for activo in getAllDataActivos():
+            asignaciones = activo.get("asignaciones")
+            if asignaciones:
+                for asignacion in asignaciones:
+                    asignaciones_presentes.append(asignacion)
+        return asignaciones_presentes
+    except requests.exceptions.RequestException as e:
+        print("Tu número de CC no se encuentra en la base de datos: ")
+        return []
+#**************************************************************************************************************************************************************************************************
+#                                                                                    tablas
+def getAllMarcas():
+    allMarca = []
+    for dia in getAllDataIdMarca():
+            getAllMar = {
+                    "ID de la marca": dia.get('id'),
+                    "nombreDelProducto": dia.get('Nombre')
+                      }
+            allMarca.append(getAllMar)
+    return allMarca
 
-
+#**************************************************************************************************************************************************************************************************
+#                                                                                    listar todos los activos  
 def getAllActivos():
     allActivos = []
     for sev in getAllDataActivos():
@@ -87,17 +120,8 @@ def getAllActivos():
           }
           allActivos.append(getAllAc)
     return allActivos
-
-def getAllMarcas():
-    allMarca = []
-    for dia in getAllDataIdMarca():
-            getAllMar = {
-                    "ID de la marca": dia.get('id'),
-                    "nombreDelProducto": dia.get('Nombre')
-                      }
-            allMarca.append(getAllMar)
-    return allMarca
-
+#***************************************************************************************************************************************************************************************************
+#                                                                                    listar activos por categoria
 def getAllCategoria(categoria):
         while True:
                 try:
@@ -125,11 +149,10 @@ def getAllCategoria(categoria):
                                animateTextDeLosMenus(''' 
                                                 NO HAY ACTIVOS CON ESTA CATEGORIA''')
                         return activos
-                
-                        
-                      
                 except Exception as error:
                        animateTextDeLosMenus(error)
+#***************************************************************************************************************************************************************************************************
+#                                                                          listar activos dados de baja por daños
 def getAllDadosDeBajaPorDaño():
         activos = []
         data = getEstado()
@@ -151,19 +174,70 @@ def getAllDadosDeBajaPorDaño():
                         "id": sev.get('id'),
                 })
         return activos
-
-
+#****************************************************************************************************************************************************************************************************
+#                                                                         listar activos y asignaciones      
 def getAllActivosAsignaciones():
         allActivos = []
-        data = getAsignaciones()
+        locuras = []
+        data = getAllValidosdeAsignaciones()
+        ñao = SoloMuestraDatosDeAsignaciones()
         for sev in data:
           allActivos.append({
                 "NroSerial": sev.get('NroSerial'),
                 "Nombre": sev.get('Nombre'),
-                "Asignacion": sev.get('asignaciones')
                                     })
-          
-        return allActivos
+        for pen in ñao:
+               locuras.append({
+                      "NroAsignacion": pen.get('NroAsignacion'),
+                      "FechaAsignacion": pen.get('FechaAsignacion'),
+                      "TipoAsignacion" : pen.get('TipoAsignacion'),
+                      "AsignadoA": pen.get('AsignadoA')
+               })
+        return(allActivos,locuras)
+def convinacionesDeLaTablaAnteriorDeAsignaciones():
+    allActivos, locuras = getAllActivosAsignaciones()
+    
+    # Indexar las asignaciones por NroSerial si está presente
+    asignaciones_por_serial = {}
+    for asignacion in locuras:
+        serial = asignacion.get("NroSerial")
+        if serial not in asignaciones_por_serial:
+            asignaciones_por_serial[serial] = []
+        asignaciones_por_serial[serial].append(asignacion)
+    
+    # Combinar datos de activos y asignaciones
+    combined_data = []
+    for activo in allActivos:
+        serial = activo["NroSerial"]
+        if serial in asignaciones_por_serial:
+            for asignacion in asignaciones_por_serial[serial]:
+                combined_data.append({
+                    "NroSerial": serial,
+                    "Nombre": activo.get("Nombre", ""),
+                    "NroAsignacion": asignacion.get("NroAsignacion", ""),
+                    "FechaAsignacion": asignacion.get("FechaAsignacion", ""),
+                    "TipoAsignacion": asignacion.get("TipoAsignacion", ""),
+                    "AsignadoA": asignacion.get("AsignadoA", "")
+                })
+        else:
+            combined_data.append({
+                "NroSerial": serial,
+                "Nombre": activo.get("Nombre", ""),
+                "NroAsignacion": "",
+                "FechaAsignacion": "",
+                "TipoAsignacion": "",
+                "AsignadoA": ""
+            })
+
+    # Imprimir la tabla combinada
+    print(tabulate(combined_data, headers="keys"))
+#****************************************************************************************************************************************************************************************************
+#                                                                          listar historial de movimiento de activo
+
+       
+
+
+
 def getAllHistorialDeMovDeActivo(id):
         allActivos = []
 
@@ -175,7 +249,3 @@ def getAllHistorialDeMovDeActivo(id):
                                     }
           allActivos.append(getAllAc)
         return allActivos
-       
-       
-
-

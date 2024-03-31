@@ -1,34 +1,80 @@
+#import
 import re
 import requests
 import json
 import uuid
-from colorama import init, Fore, Style
 import time
-def animateTextDeLosMenus(text):
+#diseño
+from colorama import init, Fore, Style
+#**********************************************************************************************************************************************************************************************************************************
+#                                                                                                     colores
+def animateTextDeLosMenusCyan(text):
+    try: 
+        for char in text:
+            print(Fore.CYAN + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+def animateTextDeLosMenusGreen(text):
+    try: 
+        for char in text:
+            print(Fore.GREEN + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+def animateTextDeLosMenusMagenta(text):
+    try: 
+        for char in text:
+            print(Fore.MAGENTA + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+def animateTextDeLosMenusRed(text):
+    try: 
+        for char in text:
+            print(Fore.RED + char, end="", flush=True)
+    except Exception as error:
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+def animateTextDeLosMenusYellow(text):
     try: 
         for char in text:
             print(Fore.YELLOW + char, end="", flush=True)
-            time.sleep(0.00000000000001)
     except Exception as error:
-        animateTextDeLosMenus(str(error))
-    finally:
-        print(Style.DIM) 
+        animateTextDeLosMenusGreen(str(error))
+    except KeyboardInterrupt as error:
+              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
+              input("Presione alguna tecla para continuar con el programa")
+#******************************************************************************************************************************************************************************************************************************************
+#                                                                                                 buscar
 def DataPersonal():
     try:
         peticion = requests.get(f"http://154.38.171.54:5502/personas")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
-        animateTextDeLosMenus("No se encontro el ID buscado:",str(e))
+        animateTextDeLosMenusGreen("No se encontro el ID buscado:",str(e))
         return []  
-
+#************************************************************************************************************************************************************************************************************************************************************
+#                                                                                                 filtros
 def BuscarNombreDeElPersonal(Nombre):
-    for val in DataPersonal():
-        if val.get("Nombre")  == Nombre:
-            return [val]
-
-
-
+    try:
+        for val in DataPersonal():
+            if val.get("Nombre")  == Nombre:
+                return [val]
+    except requests.exceptions.RequestException as e:
+        animateTextDeLosMenusGreen("El nombre del personal no se encuentra en la base de datos: ", str(e))
+        return []
+#*********************************************************************************************************************************************************************************************************************************************************
+#                                                                                                añadir personas
 def AddPersonal():
     Personal = {}
     while True:
@@ -36,6 +82,22 @@ def AddPersonal():
             if not Personal.get("id"):
                 Personal["id"] = str(uuid.uuid4().hex[:4])
             if not Personal.get("nroId (CC, Nit)"):
+                animateTextDeLosMenusMagenta('''
+  ______  __  __  _____   ______  _____  ______  __  __   ____    _____                                                                                   
+ |  ____||  \/  ||  __ \ |  ____|/ ____||  ____||  \/  | / __ \  / ____|           /\                                                                     
+ | |__   | \  / || |__) || |__  | |     | |__   | \  / || |  | || (___            /  \                                                                    
+ |  __|  | |\/| ||  ___/ |  __| | |     |  __|  | |\/| || |  | | \___ \          / /\ \                                                                   
+ | |____ | |  | || |     | |____| |____ | |____ | |  | || |__| | ____) |        / ____ \                                                                  
+ |______||_|  |_||_|     |______|\_____||______||_|  |_| \____/ |_____/        /_/    \_\                                                                 
+            _____  _____   ______  _____            _____           _    _  _   _         _____   ______  _____    _____   ____   _   _            _      
+     /\    / ____||  __ \ |  ____|/ ____|    /\    |  __ \         | |  | || \ | |       |  __ \ |  ____||  __ \  / ____| / __ \ | \ | |    /\    | |     
+    /  \  | |  __ | |__) || |__  | |  __    /  \   | |__) |        | |  | ||  \| |       | |__) || |__   | |__) || (___  | |  | ||  \| |   /  \   | |     
+   / /\ \ | | |_ ||  _  / |  __| | | |_ |  / /\ \  |  _  /         | |  | || . ` |       |  ___/ |  __|  |  _  /  \___ \ | |  | || . ` |  / /\ \  | |     
+  / ____ \| |__| || | \ \ | |____| |__| | / ____ \ | | \ \         | |__| || |\  |       | |     | |____ | | \ \  ____) || |__| || |\  | / ____ \ | |____ 
+ /_/    \_\\_____||_|  \_\|______|\_____|/_/    \_\|_|  \_\         \____/ |_| \_|       |_|     |______||_|  \_\|_____/  \____/ |_| \_|/_/    \_\|______|
+                                                                                                                                                          
+                                                                                                                                                          
+''')
                 nroID = input("Ingrese el número de identificación: ")
                 if re.match(r'^\d+$', nroID) is not None:
                         Personal["nroId (CC, Nit)"] = nroID
@@ -79,7 +141,7 @@ def AddPersonal():
                 break
                                    
         except Exception as error:
-            animateTextDeLosMenus(str(error))
+            animateTextDeLosMenusGreen(str(error))
     peticion = requests.post("http://154.38.171.54:5502/personas/", data=json.dumps(Personal, indent=4).encode("UTF-8"))
     res = peticion.json()
     res["Mensaje"] = "Personal Guardado"
