@@ -38,6 +38,7 @@ def animateTextDeLosMenusCyan(text):
         try:
             for char in text:
                 print(Fore.CYAN + char, end="", flush=True)
+            print(Style.RESET_ALL)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
@@ -51,6 +52,7 @@ def animateTextDeLosMenusGreen(text):
         try: 
             for char in text:
                 print(Fore.GREEN + char, end="", flush=True)
+            print(Style.RESET_ALL)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
@@ -64,6 +66,7 @@ def animateTextDeLosMenusMagenta(text):
         try: 
             for char in text:
                 print(Fore.MAGENTA + char, end="", flush=True)
+            print(Style.RESET_ALL)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
@@ -77,6 +80,7 @@ def animateTextDeLosMenusRed(text):
         try: 
             for char in text:
                 print(Fore.RED + char, end="", flush=True)
+            print(Style.RESET_ALL)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
@@ -90,6 +94,7 @@ def animateTextDeLosMenusYellow(text):
         try: 
             for char in text:
                 print(Fore.YELLOW + char, end="", flush=True)
+            print(Style.RESET_ALL)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
@@ -184,8 +189,8 @@ def menuZonas():
  | |_) || |__| | ____) || |____  / ____ \ | | \ \         | |__| || |\  | / ____ \       / /__| |__| || |\  | / ____ \     
  |____/  \____/ |_____/  \_____|/_/    \_\|_|  \_\         \____/ |_| \_|/_/    \_\     /_____|\____/ |_| \_|/_/    \_\    
 ''')
-                idZonas = input("Ingrese el id de la zona : ")
-                animateTextDeLosMenusMagenta(tabulate(getZon.BuscarZonas(idZonas), headers="keys", tablefmt="rounded_grid"))
+                
+                animateTextDeLosMenusMagenta(tabulate(getZon.BuscarZonas(), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          Presione UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
@@ -287,8 +292,8 @@ def menuPersonal():
  | |_) || |__| | ____) || |____  / ____ \ | | \ \         | |__| || |\  |     | |     | |____ | | \ \  ____) || |__| || |\  | / ____ \ | |____     
  |____/  \____/ |_____/  \_____|/_/    \_\|_|  \_\         \____/ |_| \_|     |_|     |______||_|  \_\|_____/  \____/ |_| \_|/_/    \_\|______|   
 ''')
-                idPersonal = input("Ingrese el id del activo : ")
-                animateTextDeLosMenusMagenta(tabulate( getPer.BuscarPersonal(idPersonal), headers="keys", tablefmt="rounded_grid"))
+                
+                animateTextDeLosMenusMagenta(tabulate( getPer.BuscarPersonal(), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          Presione UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
@@ -401,8 +406,8 @@ def menuActivos():
                                                                                                                                     
                                                                                                                                     
 ''')
-                idActivo = input("Ingrese el id del activo : ")
-                animateTextDeLosMenusMagenta(tabulate(getAc.BuscarActivos(idActivo), headers="keys", tablefmt="double_outline"))
+                
+                animateTextDeLosMenusMagenta(tabulate(getAc.BuscarActivos(), headers="keys", tablefmt="double_outline"))
                 input(f"""
                                          Presione UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
@@ -427,7 +432,6 @@ def menuActivos():
         except EOFError:
             animateTextDeLosMenusGreen("Deja deja de Presionar teclas a lo loco y utiliza el programa como es por favor")
             input("    Presione alguna tecla para continuar con el programa...")
-
 #***************************************************************************************************************************************************************************************************************************************
 #                                                                       Menu de asignaciones en activos
 def menuAsignaciones():
@@ -523,7 +527,6 @@ def menuAsignaciones():
         except EOFError:
             animateTextDeLosMenusGreen("Deja deja de Presionar teclas a lo loco y utiliza el programa como es por favor")
             input("    Presione alguna tecla para continuar con el programa...")
-
 #***************************************************************************************************************************************************************************************************************************************
 #                                                                               Menu de reportes
 def menuReportes():
@@ -572,12 +575,24 @@ def menuReportes():
                 input(f"""
                                          Presione UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 4:
-                getRep.convinacionesDeLaTablaAnteriorDeAsignaciones()
+                data_getAllActivosAsignaciones = getRep.getAllActivosAsignaciones()
+                data_pendejo = getRep.pendejo()
+                # Combinar datos
+                combined_data = []
+                for activo, pendejada in zip(data_getAllActivosAsignaciones, data_pendejo):
+                    combined_data.append({**activo, **pendejada})
+                # Imprimir datos tabulados
+                animateTextDeLosMenusMagenta("Datos de los activos con asignaciones:")
+                animateTextDeLosMenusYellow(tabulate(combined_data,headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          Presione UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 5:
                 Historial = input("Igrese el ID del activo al que quiere visualizar su historial: ")
-                animateTextDeLosMenusMagenta(tabulate(getRep.getAllHistorialDeMovDeActivo(Historial),headers="keys", tablefmt="rounded_grid"))
+                data1 = getRep.getActivo(Historial)
+                data2 = getRep.getAllHistoriaDeMov(Historial)
+                animateTextDeLosMenusMagenta("Datos con los activos que tiene historial")
+                animateTextDeLosMenusMagenta(tabulate((data1),headers="keys", tablefmt="rounded_grid"))
+                animateTextDeLosMenusMagenta(tabulate((data2),headers="keys", tablefmt="rounded_grid"))
                 input(f"""
                                          Presione UNA TECLA PARA CONTINUAR... """)
             elif OPCIONES == 6:
@@ -585,19 +600,18 @@ def menuReportes():
             else:
                 animateTextDeLosMenusGreen("La opción ingresada no es válida. Por favor, seleccione una opción válida.")
                 input("Presione alguna tecla para continuar...")
-        # except ValueError:
-        #     animateTextDeLosMenusGreen("Por favor solo ingrese los numeros pedidos ")
-        #     input("Presione alguna tecla para volver a cargar el programa")
+        except ValueError:
+            animateTextDeLosMenusGreen("Por favor solo ingrese los numeros pedidos ")
+            input("Presione alguna tecla para volver a cargar el programa")
         except KeyboardInterrupt:
             animateTextDeLosMenusGreen("Por favor cierre el programa correctamente  ")
             input("Presione alguna tecla para continuar con el programa")
-        # except TypeError:
-        #     animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos  ")
-        #     input("    Presione alguna tecla para continuar con el programa...")
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos  ")
+            input("    Presione alguna tecla para continuar con el programa...")
         except EOFError:
             animateTextDeLosMenusGreen("Deja deja de Presionar teclas a lo loco y utiliza el programa como es por favor")
             input("    Presione alguna tecla para continuar con el programa...")
-
 #****************************************************************************************************************************************************************************************************************************************
 #                                                                        Menu de movimiento de activos
 def menuMovimientoDeActivos():
@@ -669,9 +683,6 @@ def menuMovimientoDeActivos():
         except EOFError:
             animateTextDeLosMenusGreen("Deja deja de Presionar teclas a lo loco y utiliza el programa como es por favor")
             input("    Presione alguna tecla para continuar con el programa...")
-
-
-
 #****************************************************************************************************************************************************************************************************************************************
 #                                                                                 Menu principal        
 if (__name__ == "__main__"):

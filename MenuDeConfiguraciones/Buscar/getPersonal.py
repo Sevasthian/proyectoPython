@@ -3,7 +3,7 @@ from colorama import init, Fore, Style
 import time
 def animateTextDeLosMenus(text):
     for char in text:
-        print(Fore.YELLOW + char, end="", flush=True)
+        print(Fore.GREEN + char, end="", flush=True)
         time.sleep(0.001) 
     print(Style.DIM) 
 def BuscarIDdePersonal(id):
@@ -12,11 +12,11 @@ def BuscarIDdePersonal(id):
         peticion.raise_for_status()  
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
-        animateTextDeLosMenus("EL PERSONAL NO EXITE:", e)
-        return []  
-    
-def BuscarPersonal(id):
-    data = BuscarIDdePersonal(id)
+        animateTextDeLosMenus("EL PERSONAL NO EXITE")
+        return []     
+def BuscarPersonal():
+    idPersonal = input("Ingrese el id del activo : ")
+    data = BuscarIDdePersonal(idPersonal)
     list = []
     for sev in data:
         getAllAc={

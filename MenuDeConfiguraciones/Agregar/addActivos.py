@@ -10,56 +10,76 @@ from tabulate import tabulate
 from colorama import init, Fore, Style
 #**************************************************************************************************************************************************************************************************************************
 #                                                                                        colores
-def clearPantalla():
-    if os.name == "posix":
-        os.system("clear")
-    elif os.name == "nt":
-        os.system("cls")
 def animateTextDeLosMenusCyan(text):
-    try: 
-        for char in text:
-            print(Fore.CYAN + char, end="", flush=True)
-    except Exception as error:
-        animateTextDeLosMenusGreen(str(error))
-    except KeyboardInterrupt as error:
-              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
-              input("Presione alguna tecla para continuar con el programa")
+        try:
+            for char in text:
+                print(Fore.CYAN + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
 def animateTextDeLosMenusGreen(text):
-    try: 
-        for char in text:
-            print(Fore.GREEN + char, end="", flush=True)
-    except Exception as error:
-        animateTextDeLosMenusGreen(str(error))
-    except KeyboardInterrupt as error:
-              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
-              input("Presione alguna tecla para continuar con el programa")
-def animateTextDeLosMenusMagenta(text):
-    try: 
-        for char in text:
-            print(Fore.MAGENTA + char, end="", flush=True)
-    except Exception as error:
-        animateTextDeLosMenusGreen(str(error))
-    except KeyboardInterrupt as error:
-              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
-              input("Presione alguna tecla para continuar con el programa")
+        try: 
+            for char in text:
+                print(Fore.GREEN + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
+def animateTextDeLosMenusMagenta(text): 
+        try: 
+            for char in text:
+                print(Fore.MAGENTA + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
 def animateTextDeLosMenusRed(text):
-    try: 
-        for char in text:
-            print(Fore.RED + char, end="", flush=True)
-    except Exception as error:
-        animateTextDeLosMenusGreen(str(error))
-    except KeyboardInterrupt as error:
-              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
-              input("Presione alguna tecla para continuar con el programa")
+        try: 
+            for char in text:
+                print(Fore.RED + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
 def animateTextDeLosMenusYellow(text):
-    try: 
-        for char in text:
-            print(Fore.YELLOW + char, end="", flush=True)
-    except Exception as error:
-        animateTextDeLosMenusGreen(str(error))
-    except KeyboardInterrupt as error:
-              animateTextDeLosMenusGreen("Por favor cierra el programa correctamente  ", str(error))
-              input("Presione alguna tecla para continuar con el programa")
+        try: 
+            for char in text:
+                print(Fore.YELLOW + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
 #*******************************************************************************************************************************************************************************************************************************
 #                                                                                      busquedas json
 def DataMarcas():

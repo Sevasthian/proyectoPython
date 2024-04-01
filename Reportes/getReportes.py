@@ -7,11 +7,76 @@ from tabulate import tabulate
 from colorama import init, Fore, Style
 #***********************************************************************************************************************************************************************************************
 #                                                                                           colores
-def animateTextDeLosMenus(text):
-    for char in text:
-        print(Fore.YELLOW + char, end="", flush=True)
-        time.sleep(0.001) 
-    print(Style.DIM) 
+def animateTextDeLosMenusCyan(text):
+        try:
+            for char in text:
+                print(Fore.CYAN + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
+def animateTextDeLosMenusGreen(text):
+        try: 
+            for char in text:
+                print(Fore.GREEN + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
+def animateTextDeLosMenusMagenta(text): 
+        try: 
+            for char in text:
+                print(Fore.MAGENTA + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
+def animateTextDeLosMenusRed(text):
+        try: 
+            for char in text:
+                print(Fore.RED + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
+def animateTextDeLosMenusYellow(text):
+        try: 
+            for char in text:
+                print(Fore.YELLOW + char, end="", flush=True)
+            print(Style.RESET_ALL)
+        except TypeError:
+            animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
+            input("Presione alguna tecla para continuar con el programa...")
+        except KeyboardInterrupt:
+            animateTextDeLosMenusGreen("El programa se va a cerrar porque el usuario no lo dejo correr   ")
+            input( "   Presione alguna tecla para continuar con la cancelación del programa")
+            raise KeyboardInterrupt("Por favor utiliza bien el programa")
+        except Exception as error:
+            animateTextDeLosMenusGreen(str(error))
 #***********************************************************************************************************************************************************************************************
 #                                                                                          busquedas
 def BuscarIDdeActivos(id):
@@ -20,7 +85,15 @@ def BuscarIDdeActivos(id):
         peticion.raise_for_status()  
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
-        animateTextDeLosMenus("Error al realizar la solicitud HTTP:", e)
+        animateTextDeLosMenusGreen("No se encuentra en la data")
+        return [] 
+def BuscarIDdeActivosDehistoria(id):
+    try:
+        peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
+        peticion.raise_for_status()  
+        return peticion.json()
+    except requests.exceptions.RequestException as e:
+        animateTextDeLosMenusGreen("No se encuentra en la data")
         return []  
 def getAllDataActivos():
     try:
@@ -28,10 +101,10 @@ def getAllDataActivos():
             data = peticion.json()
             return data
     except requests.RequestException as e:
-            animateTextDeLosMenus("Error en la solicitud HTTP:", e)
+            animateTextDeLosMenusGreen("Error en la solicitud HTTP:")
             return []
     except ValueError as e:
-            animateTextDeLosMenus("Error al cargar JSON:", e)
+            animateTextDeLosMenusGreen("Error al cargar JSON:")
             return []
 def getAllDataIdMarca():
         try:
@@ -39,10 +112,10 @@ def getAllDataIdMarca():
                 data = peticion.json()
                 return data
         except requests.RequestException as e:
-                animateTextDeLosMenus("Error en la solicitud HTTP:", e)
+                animateTextDeLosMenusGreen("Error en la solicitud HTTP:")
                 return []
         except ValueError as e:
-                animateTextDeLosMenus("Error al cargar JSON:", e)
+                animateTextDeLosMenusGreen("Error al cargar JSON:")
         return []
 def getAllDataCategoria():
     try:
@@ -50,50 +123,65 @@ def getAllDataCategoria():
                 data = peticion.json()
                 return data
     except requests.RequestException as e:
-                animateTextDeLosMenus("Error en la solicitud HTTP:", e)
+                animateTextDeLosMenusGreen("Error en la solicitud HTTP:")
                 return []
     except ValueError as e:
-                animateTextDeLosMenus("Error al cargar JSON:", e)
+                animateTextDeLosMenusGreen("Error al cargar JSON:")
     return []
 #*********************************************************************************************************************************************************************************************
 #                                                                                       filtros
 def getCategoria(categoria):
-    categorias = []
-    for val in getAllDataActivos():
-        if val.get("idCategoria") == categoria:
-            categorias.append(val)
-    return categorias
+    try:
+        categorias = []
+        for val in getAllDataActivos():
+            if val.get("idCategoria") == categoria:
+                categorias.append(val)
+        return categorias
+    except requests.exceptions.RequestException as e:
+            animateTextDeLosMenusGreen("ERROR")
+            return []
 def getAllValidosdeAsignaciones():
     try:
-        asignaciones = []
-        data = getAllDataActivos()  # Corregir llamada de función
-        for sev in data:
-            # Suponiendo que 'asignaciones' es un campo en sev
-            if sev.get('asignaciones') is not None:  # Comprobar si 'asignaciones' existe y no es None
-                asignaciones.append(sev.get('asignaciones'))  # Agregar 'asignaciones' a la lista
-        return asignaciones
-    except Exception as e:  # Manejar cualquier excepción, no solo requests.exceptions.RequestException
-        print("Ha ocurrido un error:", e)
+        asignaciones_presentes = []
+        for val in getAllDataActivos():
+            asignaciones = val.get("asignaciones")
+            if asignaciones: 
+                asignaciones_presentes.append(val)
+        return asignaciones_presentes
+    except requests.exceptions.RequestException as e:
+        animateTextDeLosMenusGreen("ERROR")
         return []
-        
 def getEstado():
-    categorias = []
-    for val in getAllDataActivos():
-        if val.get("idEstado") == "2":
-            categorias.append(val)
-    return categorias
+    try:
+        categorias = []
+        for val in getAllDataActivos():
+            if val.get("idEstado") == "2":
+                categorias.append(val)
+        return categorias
+    except requests.exceptions.RequestException as e:
+        animateTextDeLosMenusGreen("ERROR")
+        return []
+    
 def SoloMuestraDatosDeAsignaciones():
     try:
         asignaciones_presentes = []
         for activo in getAllDataActivos():
             asignaciones = activo.get("asignaciones")
             if asignaciones:
-                for asignacion in asignaciones:
-                    asignaciones_presentes.append(asignacion)
+                asignaciones_presentes.append(asignaciones)
         return asignaciones_presentes
     except requests.exceptions.RequestException as e:
-        print("Tu número de CC no se encuentra en la base de datos: ")
+        animateTextDeLosMenusGreen("ERROR")
         return []
+def SoloMuestraDatosDeHIstorial(id):
+    try:
+        historiales = []
+        for activo in BuscarIDdeActivos(id):
+            for his in activo.get("historialActivos", []):
+                historiales.append(his)
+        return historiales
+    except requests.exceptions.RequestException as e:
+        animateTextDeLosMenusGreen("ERROR, No se encuentra data")
 #**************************************************************************************************************************************************************************************************
 #                                                                                    tablas
 def getAllMarcas():
@@ -146,11 +234,11 @@ def getAllCategoria(categoria):
                                         })
                                                 
                         if not activos:
-                               animateTextDeLosMenus(''' 
+                               animateTextDeLosMenusGreen(''' 
                                                 NO HAY ACTIVOS CON ESTA CATEGORIA''')
                         return activos
                 except Exception as error:
-                       animateTextDeLosMenus(error)
+                       animateTextDeLosMenusGreen(str(error))
 #***************************************************************************************************************************************************************************************************
 #                                                                          listar activos dados de baja por daños
 def getAllDadosDeBajaPorDaño():
@@ -177,75 +265,44 @@ def getAllDadosDeBajaPorDaño():
 #****************************************************************************************************************************************************************************************************
 #                                                                         listar activos y asignaciones      
 def getAllActivosAsignaciones():
-        allActivos = []
-        locuras = []
+        allActivos = []    
         data = getAllValidosdeAsignaciones()
-        ñao = SoloMuestraDatosDeAsignaciones()
         for sev in data:
           allActivos.append({
                 "NroSerial": sev.get('NroSerial'),
                 "Nombre": sev.get('Nombre'),
-                                    })
+                           })
+        return allActivos
+def pendejo():
+        locuras = []
+        ñao = SoloMuestraDatosDeAsignaciones()
         for pen in ñao:
                locuras.append({
-                      "NroAsignacion": pen.get('NroAsignacion'),
-                      "FechaAsignacion": pen.get('FechaAsignacion'),
-                      "TipoAsignacion" : pen.get('TipoAsignacion'),
-                      "AsignadoA": pen.get('AsignadoA')
+                      "NroAsignacion": pen[0].get('NroAsignacion'),
+                      "FechaAsignacion": pen[0].get('FechaAsignacion'),
+                      "TipoAsignacion" : pen[0].get('TipoAsignacion'),
+                      "AsignadoA": pen[0].get('AsignadoA')
                })
-        return(allActivos,locuras)
-def convinacionesDeLaTablaAnteriorDeAsignaciones():
-    allActivos, locuras = getAllActivosAsignaciones()
-    
-    # Indexar las asignaciones por NroSerial si está presente
-    asignaciones_por_serial = {}
-    for asignacion in locuras:
-        serial = asignacion.get("NroSerial")
-        if serial not in asignaciones_por_serial:
-            asignaciones_por_serial[serial] = []
-        asignaciones_por_serial[serial].append(asignacion)
-    
-    # Combinar datos de activos y asignaciones
-    combined_data = []
-    for activo in allActivos:
-        serial = activo["NroSerial"]
-        if serial in asignaciones_por_serial:
-            for asignacion in asignaciones_por_serial[serial]:
-                combined_data.append({
-                    "NroSerial": serial,
-                    "Nombre": activo.get("Nombre", ""),
-                    "NroAsignacion": asignacion.get("NroAsignacion", ""),
-                    "FechaAsignacion": asignacion.get("FechaAsignacion", ""),
-                    "TipoAsignacion": asignacion.get("TipoAsignacion", ""),
-                    "AsignadoA": asignacion.get("AsignadoA", "")
-                })
-        else:
-            combined_data.append({
-                "NroSerial": serial,
-                "Nombre": activo.get("Nombre", ""),
-                "NroAsignacion": "",
-                "FechaAsignacion": "",
-                "TipoAsignacion": "",
-                "AsignadoA": ""
-            })
-
-    # Imprimir la tabla combinada
-    print(tabulate(combined_data, headers="keys"))
+        return locuras
 #****************************************************************************************************************************************************************************************************
 #                                                                          listar historial de movimiento de activo
-
-       
-
-
-
-def getAllHistorialDeMovDeActivo(id):
+def getActivo(id):
         allActivos = []
-
         for sev in BuscarIDdeActivos(id):
           getAllAc={
                 "NroSerial": sev.get('NroSerial'),
-                "Nombre": sev.get('Nombre'),
-                "Historial de movimiento de activo": sev.get('historialActivos')
+                "Nombre": sev.get('Nombre')
                                     }
           allActivos.append(getAllAc)
         return allActivos
+def getAllHistoriaDeMov(id):
+    histori = []
+    data = SoloMuestraDatosDeHIstorial(id)
+    for sev in data:
+            histori.append({
+                  "NroId": sev.get('NroId'),
+                  "Fecha" : sev.get('Fecha'),
+                  "tipoMov" : sev.get('tipoMov'),
+                  "idRespMov": sev.get('idRespMov')
+            })
+    return  histori
