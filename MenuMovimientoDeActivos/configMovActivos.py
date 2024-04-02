@@ -199,13 +199,12 @@ def deleteActivos(id):
                 if not historial.get("idRespMov"):
                     repo = MostrarIdReposable(Acceso)
                     letra = str(repo)
-                    historial["idRespMov"] = letra
-                    break
+                    historial["idRespMov"] = letra   
                 data.setdefault("historialActivos", []).append(historial)
-            peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data, indent=4).encode("UTF-8"))
-            res = peticion.json()
-            res["Mensaje"] = "Activo Modificado"
-            return [res]
+                peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data, indent=4).encode("UTF-8"))
+                res = peticion.json()
+                res["Mensaje"] = "Activo Modificado"
+                return [res]
                     
         except requests.exceptions.RequestException as error:
                 animateTextDeLosMenusGreen("ID no encontrado", str(error))

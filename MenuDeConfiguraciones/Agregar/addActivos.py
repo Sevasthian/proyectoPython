@@ -170,13 +170,25 @@ def BuscarNroID(Nro):
     except requests.exceptions.RequestException as e:
         animateTextDeLosMenusGreen("Numero de item no encontrado en la base de datos: ", str(e))
         return []
+def obtener_siguiente_numero_item(activos):
+    # Obtener el valor más alto de "NroItem" de todos los activos
+    max_nro_item = max([int(activo.get("NroItem", 0)) for activo in activos])
+    # Agregar 1 al valor más alto para obtener el siguiente número de ítem
+    return max_nro_item + 1
 #**********************************************************************************************************************************************************************************************************************************************
 #                                                                                                     añadir activo
 def AddActivo():
     Activo = {}
     while True:
-        try:     
-            if not Activo.get("NroItem"):
+        try:
+              
+            activos = DataActivos()
+            next_nro_item = obtener_siguiente_numero_item(activos)
+            Activo["NroItem"] = next_nro_item
+            if not Activo.get("CodTransaccion"):
+                        Codtrasaccion = int(327)
+                        Activo["CodTransaccion"] = Codtrasaccion
+            if not Activo.get("NroSerial"):
                 animateTextDeLosMenusMagenta('''
 
   ______  __  __  _____   ______  _____  ______  __  __   ____    _____                                                                    
@@ -194,20 +206,6 @@ def AddActivo():
                                                                                                                                            
                                                                                                                                         
 ''')
-                nroID = input("Ingrese el número de de Item: ")
-                if re.match(r'^\d+$', nroID) is not None:
-                        if BuscarNroID(nroID):
-                            raise Exception("El numero de Item ya existe")
-                        else:
-                            nroID = int(nroID)
-                            Activo["NroItem"] = nroID
-                else:
-                    raise Exception("El numero de Item es incorrecto, recuerde que solo se ingresan números")
-                
-            if not Activo.get("CodTransaccion"):
-                        Codtrasaccion = int(327)
-                        Activo["CodTransaccion"] = Codtrasaccion
-            if not Activo.get("NroSerial"):
                 serial = input("Ingrese el numero del serial del activo: ")
                 if re.match(r'^[A-Z0-9]+$', serial) is not None:
                     Activo["NroSerial"] = serial
@@ -228,7 +226,10 @@ def AddActivo():
                     raise Exception("Número de formulario incorrecto, recuerde ingresar solo se ingresan numeros")
             if not Activo.get("Nombre"):
                 Nom = input("Ingrese el nombre del activo: ")
-                Activo["Nombre"] = Nom
+                if re.match(r'^[A-Za-z]+\s[A-Za-z]+$', Nom) is not None:
+                    Activo["Nombre"] = Nom
+                else:
+                    raise Exception("Su nombre debe empezar con mayuscualas ejemplo(Pedro Rojas)")
             if not Activo.get("Proveedor"):
                 # Proverdor = str("Compumax Computer")
                 Activo["Proveedor"] = "Compumax Computer "
@@ -236,23 +237,23 @@ def AddActivo():
                 Empresa = str("Campuslands")
                 Activo["EmpresaResponsable"] = Empresa
             if not Activo.get("idMarca"):
-                animateTextDeLosMenusYellow(tabulate(TablaMarcas(), headers="keys", tablefmt="double_outline"))
                 IdMarca = input("Ingrese el ID de la marca según la tabla: ")
-                if re.match(r"[1-7]+", IdMarca) is not None:
+                animateTextDeLosMenusYellow(tabulate(TablaMarcas(), headers="keys", tablefmt="double_outline"))
+                if re.match(r"^[1-7]$", IdMarca) is not None:
                     Activo["IdMarca"] = IdMarca
                 else:
                     raise Exception("Por favor solo ingrese algun ID que estan en la tabla")
             if not Activo.get("idCategoria"):
                 animateTextDeLosMenusYellow(tabulate(TablaCategoria(), headers="keys", tablefmt="double_outline"))
                 IdCategoria = input("Ingrese una el ID de una categoria que aparesca en la tabla: ")
-                if re.match(r"[1-3]+", IdCategoria) is not None:
+                if re.match(r"^[1-3]$", IdCategoria) is not None:
                     Activo["idCategoria"]= IdCategoria
                 else:
                     raise Exception("Por favor solo ingrese algún ID que aparesca en la tabla")
             if not Activo.get("idTipo"):
                 animateTextDeLosMenusYellow(tabulate(TablaTipoActivo(), headers="keys", tablefmt="double_outline"))
                 IdTipo = input("Ingrese el ID del tipo de activo que va a agregar: ")
-                if re.match(r"[1-8]+",IdTipo) is not None:
+                if re.match(r'^[1-8]$',IdTipo) is not None:
                     Activo["idTipo"] = IdTipo
                 else:
                     raise Exception("Por favor solo ingrese algún ID que aparesca en la tabla")

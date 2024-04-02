@@ -124,10 +124,10 @@ def AddPersonal():
                                                                                                                                                           
 ''')
                 nroID = input("Ingrese el número de identificación: ")
-                if re.match(r'^\d+$', nroID) is not None:
+                if re.match(r'^\d{10}$', nroID) is not None:
                         Personal["nroId (CC, Nit)"] = nroID
                 else:
-                    raise Exception("CC no valido, recuerde que solo se ingresan números")
+                    raise Exception("Los números de la identificación tiene que se minimo 10")
                 
             if not Personal.get("Nombre"):
                 Nombre = input("Ingrese el nombre del personal a agregar: ")
@@ -152,7 +152,7 @@ def AddPersonal():
                         "id":Personal.get("id"),
                         "num": movil}
                 else:
-                    raise Exception("Número de teléfono móvil no válido, recuerde ingresar 10 dígitos")
+                    raise Exception("Número de teléfono móvil no válido, recuerde ingresar 10 dígitos, si el usuario es estrajero que cambie de SIM")
                     
                 casa = input("Ingrese el número de teléfono fijo (casa): ")
                 if re.match(r'^\d{10}$', casa) is not None:
