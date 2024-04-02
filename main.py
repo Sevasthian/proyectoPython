@@ -39,6 +39,7 @@ def animateTextDeLosMenusCyan(text):
             for char in text:
                 print(Fore.CYAN + char, end="", flush=True)
             print(Style.RESET_ALL)
+            time.sleep(0.001)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
@@ -53,6 +54,7 @@ def animateTextDeLosMenusGreen(text):
             for char in text:
                 print(Fore.GREEN + char, end="", flush=True)
             print(Style.RESET_ALL)
+            time.sleep(0.001)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
@@ -125,7 +127,7 @@ def menuZonas():
                                 5. REGRESAR AL MENU PRINCIPAL
               ''')
         try:
-            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            OPCIONES= int(input("Ingrese el número de la seleccion deseada: "))
             if OPCIONES == 1: 
                 animateTextDeLosMenusMagenta(tabulate(addZon.AddZona(), headers="keys", tablefmt="double_outline"))
                 input(f"""
@@ -231,7 +233,7 @@ def menuPersonal():
                                     5. REGRESAR AL MENU PRINCIPAL
               ''')
         try:
-            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            OPCIONES= int(input("Ingrese el número de la seleccion deseada: "))
             if OPCIONES == 1:
                 animateTextDeLosMenusMagenta(tabulate( addPer.AddPersonal(), headers="keys", tablefmt="rounded_grid"))
                 input(f"""
@@ -456,7 +458,7 @@ def menuAsignaciones():
                                         3. REGRESAR AL MENU PRINCIPAL
 ''')
         try:
-            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            OPCIONES= int(input("Ingrese el número de la seleccion deseada: "))
             if OPCIONES == 1:
                 animateTextDeLosMenusMagenta('''
   ______  __  __  _____   ______  _____  ______  __  __   ____    _____                                                                                       
@@ -551,7 +553,7 @@ def menuReportes():
 
 ''')
         try:
-            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            OPCIONES= int(input("Ingrese el número de la seleccion deseada: "))
             if OPCIONES == 1:
                 animateTextDeLosMenusMagenta(tabulate(getRep.getAllActivos(), headers="keys", tablefmt="rounded_grid"))
                 animateTextDeLosMenusYellow(tabulate(getRep.getAllMarcas(), headers="keys", tablefmt="rounded_grid"))
@@ -639,7 +641,7 @@ def menuMovimientoDeActivos():
 
 ''')
         try:
-            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            OPCIONES= int(input("Ingrese el número de la seleccion deseada: "))
             if OPCIONES == 1:
 
                 Historial = input("Igrese el ID del activo al que dar como estado no asignado: ")
@@ -753,7 +755,7 @@ if (__name__ == "__main__"):
         7. SALIR  
     ''')
         try:
-            OPCIONES= int(input("Ingrese el número de la seleccion deceada: "))
+            OPCIONES= int(input("Ingrese el número de la seleccion deseada: "))
             if OPCIONES == 1:
                 menuActivos() 
             elif OPCIONES == 2:

@@ -274,6 +274,7 @@ def getAllActivosAsignaciones():
                            })
         return allActivos
 def pendejo():
+    try:
         locuras = []
         ñao = SoloMuestraDatosDeAsignaciones()
         for pen in ñao:
@@ -284,6 +285,10 @@ def pendejo():
                       "AsignadoA": pen[0].get('AsignadoA')
                })
         return locuras
+    except KeyError:
+        animateTextDeLosMenusGreen("algun pedejo daño json")
+        # Manejar la excepción si 'NroAsignacion' no está presente en el primer elemento de 'pen'
+        return None
 #****************************************************************************************************************************************************************************************************
 #                                                                          listar historial de movimiento de activo
 def getActivo(id):
