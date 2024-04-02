@@ -38,8 +38,8 @@ def animateTextDeLosMenusCyan(text):
         try:
             for char in text:
                 print(Fore.CYAN + char, end="", flush=True)
+                time.sleep(0.001)
             print(Style.RESET_ALL)
-            time.sleep(0.001)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
