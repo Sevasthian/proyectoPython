@@ -14,6 +14,7 @@ def animateTextDeLosMenusCyan(text):
         try:
             for char in text:
                 print(Fore.CYAN + char, end="", flush=True)
+                time.sleep(0.001)
             print(Style.RESET_ALL)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
@@ -29,6 +30,7 @@ def animateTextDeLosMenusGreen(text):
             for char in text:
                 print(Fore.GREEN + char, end="", flush=True)
             print(Style.RESET_ALL)
+            time.sleep(0.001)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
@@ -56,6 +58,7 @@ def animateTextDeLosMenusRed(text):
         try: 
             for char in text:
                 print(Fore.RED + char, end="", flush=True)
+                time.sleep(0.001)
             print(Style.RESET_ALL)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
@@ -237,8 +240,8 @@ def AddActivo():
                 Empresa = str("Campuslands")
                 Activo["EmpresaResponsable"] = Empresa
             if not Activo.get("idMarca"):
-                IdMarca = input("Ingrese el ID de la marca según la tabla: ")
                 animateTextDeLosMenusYellow(tabulate(TablaMarcas(), headers="keys", tablefmt="double_outline"))
+                IdMarca = input("Ingrese el ID de la marca según la tabla: ")
                 if re.match(r"^[1-7]$", IdMarca) is not None:
                     Activo["IdMarca"] = IdMarca
                 else:

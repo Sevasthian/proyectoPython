@@ -13,6 +13,7 @@ def animateTextDeLosMenusCyan(text):
         try:
             for char in text:
                 print(Fore.CYAN + char, end="", flush=True)
+                time.sleep(0.001)
             print(Style.RESET_ALL)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
@@ -28,6 +29,7 @@ def animateTextDeLosMenusGreen(text):
             for char in text:
                 print(Fore.GREEN + char, end="", flush=True)
             print(Style.RESET_ALL)
+            time.sleep(0.001)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")
             input("Presione alguna tecla para continuar con el programa...")
@@ -55,6 +57,7 @@ def animateTextDeLosMenusRed(text):
         try: 
             for char in text:
                 print(Fore.RED + char, end="", flush=True)
+                time.sleep(0.001)
             print(Style.RESET_ALL)
         except TypeError:
             animateTextDeLosMenusGreen("Por favor ingrese los datos pedidos")

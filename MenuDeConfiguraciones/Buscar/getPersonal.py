@@ -13,18 +13,23 @@ def BuscarIDdePersonal(id):
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
         animateTextDeLosMenus("EL PERSONAL NO EXITE")
-        return []     
+        return []
+    except AttributeError:
+        animateTextDeLosMenus("Debe ingresar algún dato")     
 def BuscarPersonal():
-    idPersonal = input("Ingrese el id del activo : ")
-    data = BuscarIDdePersonal(idPersonal)
-    list = []
-    for sev in data:
-        getAllAc={
+    try:
+        idPersonal = input("Ingrese el id del activo : ")
+        data = BuscarIDdePersonal(idPersonal)
+        list = []
+        for sev in data:
+            getAllAc={
 
-                "Numero de IDENTIDAD": sev.get('nroId (CC, Nit)'),
-                "Nombre": sev.get('Nombre'),
-                "Email": sev.get('Email'),
-                "Telefonos": sev.get('Telefonos')
-          }
-        list.append(getAllAc)
-    return list
+                    "Numero de IDENTIDAD": sev.get('nroId (CC, Nit)'),
+                    "Nombre": sev.get('Nombre'),
+                    "Email": sev.get('Email'),
+                    "Telefonos": sev.get('Telefonos')
+            }
+            list.append(getAllAc)
+        return list
+    except AttributeError:
+        animateTextDeLosMenus("Debe ingresar algún dato")

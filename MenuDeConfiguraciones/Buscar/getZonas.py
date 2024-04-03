@@ -13,17 +13,22 @@ def BuscarIDdeZonas(id):
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
         animateTextDeLosMenus("LA ZONA NO EXITE:")
-        return []     
+        return []  
+    except AttributeError:
+        animateTextDeLosMenus("Debe ingresar algún dato")   
 def BuscarZonas():
-    idZonas = input("Ingrese el id de la zona : ")
-    list = []
-    for sev in BuscarIDdeZonas(idZonas):
-        getAllAc={
+    try:
+        idZonas = input("Ingrese el id de la zona : ")
+        list = []
+        for sev in BuscarIDdeZonas(idZonas):
+            getAllAc={
 
-                "Nombre de la Zona": sev.get('nombreZona'),
-                "Coddigo Campus": sev.get('totalCapacidad'),
-                "ID": sev.get('id')
-          }
-        list.append(getAllAc)
-    return list
+                    "Nombre de la Zona": sev.get('nombreZona'),
+                    "Coddigo Campus": sev.get('totalCapacidad'),
+                    "ID": sev.get('id')
+            }
+            list.append(getAllAc)
+        return list
+    except AttributeError:
+        animateTextDeLosMenus("Debe ingresar algún dato")
 
