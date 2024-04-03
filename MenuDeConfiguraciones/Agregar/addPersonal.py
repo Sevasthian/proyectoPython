@@ -85,7 +85,7 @@ def animateTextDeLosMenusYellow(text):
 #                                                                                                 buscar
 def DataPersonal():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/personas")
+        peticion = requests.get(f"http://154.38.171.54:5501/personas")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -162,15 +162,32 @@ def AddPersonal():
                     telefonos["casa"] = {
                         "id":Personal.get("id"),
                         "num": casa}
+                
                 else:
                     raise Exception("Número de teléfono fijo no válido, recuerde ingresar 10 dígitos")
+
+                personal = input("Ingrese el número de teléfono fijo (casa): ")
+                if re.match(r'^\d{10}$', personal) is not None:
+                    telefonos["Personal"] = {
+                        "id":Personal.get("id"),
+                        "num": personal}
+                
+                else:
+                    raise Exception("Número de teléfono personal no válido, recuerde ingresar 10 dígitos")
+                oficina = input("Ingrese el número de teléfono móvil: ")
+                if re.match(r'^\d{10}$', oficina) is not None:
+                    telefonos["Oficina"] = {
+                        "id":Personal.get("id"),
+                        "num": oficina}
+                else:
+                    raise Exception("Número de teléfono móvil no válido, recuerde ingresar 10 dígitos, si el usuario es estrajero que cambie de SIM")
                     
                 Personal["Telefonos"] = [telefonos]
                 break
                                    
         except Exception as error:
             animateTextDeLosMenusGreen(str(error))
-    peticion = requests.post("http://154.38.171.54:5502/personas/", data=json.dumps(Personal, indent=4).encode("UTF-8"))
+    peticion = requests.post("http://154.38.171.54:5501/personas/", data=json.dumps(Personal, indent=4).encode("UTF-8"))
     res = peticion.json()
     res["Mensaje"] = "Personal Guardado"
     return [res]

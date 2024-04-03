@@ -85,7 +85,7 @@ def animateTextDeLosMenusYellow(text):
 #                                                                          busquedas
 def BuscarIDdeActivos(id):
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/{id}")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException:
@@ -93,7 +93,7 @@ def BuscarIDdeActivos(id):
         return []
 def DataPersonas():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/personas")
+        peticion = requests.get(f"http://154.38.171.54:5501/personas")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -131,7 +131,7 @@ def deleteActivos(id):
                 if not historial.get("idRespMov"):
                     historial["idRespMov"] = str(MostrarIdReposable(Acceso))
                 data.setdefault("historialActivos", []).append(historial)
-                url = f"http://154.38.171.54:5502/activos/{id}"
+                url = f"http://154.38.171.54:5501/activos/{id}"
                 peticion = requests.put(url, data=json.dumps(data, indent=4).encode("UTF-8"))
                 res = peticion.json()
                 res["Mensaje"] = "Activo Modificado"
@@ -151,7 +151,7 @@ def deleteActivos(id):
 def DeleteActivoSecreto(id):
     data = BuscarIDdeActivos(id)
     if len(data):
-        peticion = requests.delete(f"http://154.38.171.54:5502/activos/{id}")
+        peticion = requests.delete(f"http://154.38.171.54:5501/activos/{id}")
         if peticion.status_code == 204:
             data.append({"message":  "Zona eliminado correctamente"})
             return {

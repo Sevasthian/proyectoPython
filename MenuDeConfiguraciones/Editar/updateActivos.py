@@ -84,7 +84,7 @@ def animateTextDeLosMenusYellow(text):
 #                                                                                      busquedas
 def BuscarIDdeActivos(id):
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/{id}")
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
         animateTextDeLosMenusGreen("No se encontro la data activos:", str(e))
@@ -131,7 +131,7 @@ Seleccion incorrecta""")
         except ValueError as error:
             animateTextDeLosMenusGreen(str(error))
     
-    peticion = requests.put(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(data[0], indent=4).encode("UTF-8"))
+    peticion = requests.put(f"http://154.38.171.54:5501/activos/{id}", data=json.dumps(data[0], indent=4).encode("UTF-8"))
     res = peticion.json()
     res["Mensaje"] = "Activo Modificado"
     return [res]

@@ -87,7 +87,7 @@ def animateTextDeLosMenusYellow(text):
 #                                                                                        busquedas
 def BuscarIDActivos(id):
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/{id}")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -95,7 +95,7 @@ def BuscarIDActivos(id):
         return [] 
 def BuscarActivos():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -104,7 +104,7 @@ def BuscarActivos():
 
 def DataPersonas():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/personas")
+        peticion = requests.get(f"http://154.38.171.54:5501/personas")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -112,7 +112,7 @@ def DataPersonas():
         return []  
 def DataZonas():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -120,7 +120,7 @@ def DataZonas():
         return []  
 def DataTipoDePersonal():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/personas")
+        peticion = requests.get(f"http://154.38.171.54:5501/personas")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -128,7 +128,7 @@ def DataTipoDePersonal():
         return []  
 def DataTipoDeZona():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/zonas")
+        peticion = requests.get(f"http://154.38.171.54:5501/zonas")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -136,7 +136,7 @@ def DataTipoDeZona():
         return []  
 def BusActivos(id):
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/{id}")
         peticion.raise_for_status()  
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
@@ -272,7 +272,7 @@ def CrearAsignacion(id):
                     except Exception as error:
                         animateTextDeLosMenusGreen(str(error))
                 dificil.setdefault("asignaciones", []).append(datos)
-                peticion = requests.patch(f"http://154.38.171.54:5502/activos/{id}", data=json.dumps(dificil, indent=4).encode("UTF-8"))
+                peticion = requests.patch(f"http://154.38.171.54:5501/activos/{id}", data=json.dumps(dificil, indent=4).encode("UTF-8"))
                 res = peticion.json()
                 res["Mensaje"] = "Activo Actualizado con Asignación"
                 return [res]

@@ -84,7 +84,7 @@ def animateTextDeLosMenusYellow(text):
 #                                                                                        busquedas 
 def DataZonas():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/zonas/")
+        peticion = requests.get(f"http://154.38.171.54:5501/zonas/")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -142,7 +142,7 @@ def AddZona():
                                    
         except Exception as error:
             animateTextDeLosMenusGreen(str(error))
-    peticion = requests.post("http://154.38.171.54:5502/zonas/", data=json.dumps(Zona, indent=4).encode("UTF-8"))
+    peticion = requests.post("http://154.38.171.54:5501/zonas/", data=json.dumps(Zona, indent=4).encode("UTF-8"))
     res = peticion.json()
     res["Mensaje"] = "Zona Guardada"
     return [res]

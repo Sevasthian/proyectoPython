@@ -82,7 +82,7 @@ def animateTextDeLosMenusYellow(text):
 #                                                                       busquedas
 def BuscarIDdePersonal(id):
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/personas/{id}")
+        peticion = requests.get(f"http://154.38.171.54:5501/personas/{id}")
         peticion.raise_for_status()  
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
@@ -90,7 +90,7 @@ def BuscarIDdePersonal(id):
         return []  
 def dataActivos():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -116,7 +116,7 @@ def DeletePersonal(id):
     if not condiccionDePersonal(id):
         data = BuscarIDdePersonal(id)
         if len(data):
-            peticion = requests.delete(f"http://154.38.171.54:5502/personas/{id}")
+            peticion = requests.delete(f"http://154.38.171.54:5501/personas/{id}")
             if peticion.status_code == 204:
                 data.append({"message":  "Personal eliminado correctamente"})
                 return {

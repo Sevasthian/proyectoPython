@@ -82,7 +82,7 @@ def animateTextDeLosMenusYellow(text):
 #                                            busquedas
 def BuscarIDdeZonas(id):
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/zonas/{id}")
+        peticion = requests.get(f"http://154.38.171.54:5501/zonas/{id}")
         peticion.raise_for_status()  
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
@@ -93,7 +93,7 @@ def BuscarIDdeZonas(id):
 def DeleteZona(id):
     data = BuscarIDdeZonas(id)
     if len(data):
-        peticion = requests.delete(f"http://154.38.171.54:5502/zonas/{id}")
+        peticion = requests.delete(f"http://154.38.171.54:5501/zonas/{id}")
         if peticion.status_code == 204:
             data.append({"message":  "Zona eliminado correctamente"})
             return {

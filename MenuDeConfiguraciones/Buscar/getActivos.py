@@ -8,7 +8,7 @@ def animateTextDeLosMenus(text):
     print(Style.DIM) 
 def BuscarIDdeActivos(id):
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/{id}")
         peticion.raise_for_status()  
         return [peticion.json()]
     except requests.exceptions.RequestException as e:

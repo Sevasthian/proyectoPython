@@ -84,7 +84,7 @@ def animateTextDeLosMenusYellow(text):
 #                                                                                          busquedas
 def BuscarIDdeActivos(id):
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/{id}")
         peticion.raise_for_status()  
         return [peticion.json()]
     except requests.exceptions.RequestException as e:
@@ -92,7 +92,7 @@ def BuscarIDdeActivos(id):
         return [] 
 def BuscarIDdeActivosDehistoria(id):
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos/{id}")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos/{id}")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -100,7 +100,7 @@ def BuscarIDdeActivosDehistoria(id):
         return []  
 def getAllDataActivos():
     try:
-            peticion =  requests.get("http://154.38.171.54:5502/activos")
+            peticion =  requests.get("http://154.38.171.54:5501/activos")
             data = peticion.json()
             return data
     except requests.RequestException as e:
@@ -111,7 +111,7 @@ def getAllDataActivos():
             return []
 def getAllDataIdMarca():
         try:
-                peticion =  requests.get("http://154.38.171.54:5502/marcas")
+                peticion =  requests.get("http://154.38.171.54:5501/marcas")
                 data = peticion.json()
                 return data
         except requests.RequestException as e:
@@ -122,7 +122,7 @@ def getAllDataIdMarca():
         return []
 def getAllDataCategoria():
     try:
-                peticion =  requests.get("http://154.38.171.54:5502/categoriaActivos/")
+                peticion =  requests.get("http://154.38.171.54:5501/categoriaActivos/")
                 data = peticion.json()
                 return data
     except requests.RequestException as e:

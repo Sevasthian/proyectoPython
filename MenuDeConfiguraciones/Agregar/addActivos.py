@@ -87,7 +87,7 @@ def animateTextDeLosMenusYellow(text):
 #                                                                                      busquedas json
 def DataMarcas():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/marcas")
+        peticion = requests.get(f"http://154.38.171.54:5501/marcas")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -95,7 +95,7 @@ def DataMarcas():
         return []  
 def DataCategoria():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/categoriaActivos")
+        peticion = requests.get(f"http://154.38.171.54:5501/categoriaActivos")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -103,7 +103,7 @@ def DataCategoria():
         return []  
 def DataTipoDeActivo():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/tipoActivos")
+        peticion = requests.get(f"http://154.38.171.54:5501/tipoActivos")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -111,7 +111,7 @@ def DataTipoDeActivo():
         return []  
 def DataActivos():
     try:
-        peticion = requests.get(f"http://154.38.171.54:5502/activos")
+        peticion = requests.get(f"http://154.38.171.54:5501/activos")
         peticion.raise_for_status()  
         return peticion.json()
     except requests.exceptions.RequestException as e:
@@ -280,7 +280,7 @@ def AddActivo():
                 break                                   
         except Exception as error:
             animateTextDeLosMenusGreen(str(error))
-    peticion = requests.post("http://154.38.171.54:5502/activos/", data=json.dumps(Activo, indent=4).encode("UTF-8"))
+    peticion = requests.post("http://154.38.171.54:5501/activos/", data=json.dumps(Activo, indent=4).encode("UTF-8"))
     res = peticion.json()
     res["Mensaje"] = "Activo Guardado"
     return [res]
