@@ -10,7 +10,7 @@ encuentran en su sede principal ubicada en la ciudad de bucaramanga.</p>
 cada una de estas opciones nos permite acceder a otro tipo de menus</p>
 <br>
 
-### COMO ENTA CONSTRUIDO EL CODIGO
+### COMO ESTA CONSTRUIDO EL MENU
 ![alt text](image-1.png)
 <p>La varible opciones nos registra un codigo el cual va a ser evaluado por cada una de las condicones y me va a direccionar a los menus de dicha opcion y los except son posibles error que se registren en la varible opciones</p>
 <br>
@@ -21,3 +21,4 @@ cada una de estas opciones nos permite acceder a otro tipo de menus</p>
 a algún activo</p>
 <br>
 
+## COMO ESTA CONSTRUIDO EL MENU
